@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cosmo Brand | لوحة التحكم</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--rose:#c96a85;--deep:#8b3a5a;--gold:#c9a84c;--dark:#1a0a10;--mid:#5c2d40;--soft:#f5e6ea;--green:#27ae60;--red:#e74c3c;--orange:#e67e22;--sb:#12080f;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Tajawal',sans-serif;background:#ede4e8;color:#2d1525;}
+
+/* ══ LOGIN ══ */
+#loginWrap{position:fixed;inset:0;background:linear-gradient(135deg,var(--sb),var(--deep));display:flex;align-items:center;justify-content:center;z-index:9999;}
+.lbox{background:#fff;border-radius:22px;padding:44px 38px;text-align:center;width:90%;max-width:370px;box-shadow:0 20px 50px rgba(0,0,0,.5);}
+.lbox .logo{font-size:1.9rem;font-weight:900;color:var(--deep);}
+.lbox .logo span{color:var(--gold);}
+.lbox .icon{font-size:3.2rem;margin:12px 0;display:block;}
+.lbox .sub{color:var(--mid);font-size:.86rem;margin-bottom:22px;}
+.pinp{width:100%;padding:12px 15px;border:2px solid #e0d0d8;border-radius:11px;font-family:'Tajawal',sans-serif;font-size:1rem;text-align:center;letter-spacing:5px;margin-bottom:12px;transition:border .3s;}
+.pinp:focus{outline:none;border-color:var(--rose);}
+.lbtn{width:100%;background:linear-gradient(135deg,var(--rose),var(--deep));color:#fff;border:none;padding:13px;border-radius:11px;font-family:'Tajawal',sans-serif;font-size:1rem;font-weight:700;cursor:pointer;}
+.lbtn:hover{opacity:.9;}
+.lerr{color:var(--red);font-size:.82rem;margin-top:7px;display:none;}
+.lnote{font-size:.69rem;color:#ccc;margin-top:14px;}
+
+/* ══ LAYOUT ══ */
+#appWrap{display:none;}
+.layout{display:flex;min-height:100vh;}
+
+/* ══ SIDEBAR ══ */
+.sidebar{width:235px;background:var(--sb);color:#fff;display:flex;flex-direction:column;position:fixed;top:0;right:0;height:100%;z-index:100;}
+.sb-top{padding:22px 18px 16px;border-bottom:1px solid rgba(255,255,255,.08);}
+.sb-top .logo{font-size:1.45rem;font-weight:900;color:#fff;}
+.sb-top .logo span{color:var(--gold);}
+.sb-top small{color:rgba(255,255,255,.38);font-size:.7rem;display:block;margin-top:2px;}
+.sb-menu{padding:14px 0;flex:1;overflow-y:auto;}
+.ni{display:flex;align-items:center;gap:10px;padding:12px 18px;cursor:pointer;transition:all .25s;color:rgba(255,255,255,.55);font-size:.88rem;border-right:3px solid transparent;user-select:none;}
+.ni:hover{background:rgba(255,255,255,.07);color:#fff;}
+.ni.active{background:rgba(201,106,133,.18);color:#fff;border-right-color:var(--rose);}
+.ni .ic{font-size:1.05rem;width:20px;text-align:center;flex-shrink:0;}
+.ni .ndot{background:var(--red);color:#fff;border-radius:50%;min-width:17px;height:17px;font-size:.6rem;display:flex;align-items:center;justify-content:center;margin-right:auto;padding:0 3px;font-weight:700;}
+.sb-bot{padding:12px 16px;border-top:1px solid rgba(255,255,255,.07);}
+.sb-bot small{color:rgba(255,255,255,.25);font-size:.68rem;}
+.fb-row{display:flex;align-items:center;gap:5px;margin-bottom:4px;}
+.fb-dot{width:7px;height:7px;border-radius:50%;background:#555;flex-shrink:0;}
+.fb-dot.on{background:var(--green);box-shadow:0 0 5px var(--green);}
+.fb-dot.off{background:var(--red);}
+.fb-lbl{color:rgba(255,255,255,.32);font-size:.68rem;}
+
+/* ══ MAIN ══ */
+.main{margin-right:235px;flex:1;display:flex;flex-direction:column;min-height:100vh;}
+.topbar{background:#fff;padding:13px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #e0d0d8;position:sticky;top:0;z-index:50;box-shadow:0 2px 7px rgba(0,0,0,.04);}
+.topbar h2{font-size:1.15rem;font-weight:700;color:var(--deep);}
+.tb-r{display:flex;align-items:center;gap:10px;}
+.tb-date{background:var(--soft);color:var(--deep);border-radius:50px;padding:5px 12px;font-size:.78rem;font-weight:600;}
+.out-btn{background:none;border:2px solid #e0d0d8;color:var(--mid);border-radius:50px;padding:5px 12px;font-family:'Tajawal',sans-serif;font-size:.78rem;cursor:pointer;transition:all .3s;}
+.out-btn:hover{background:var(--red);border-color:var(--red);color:#fff;}
+.content{padding:22px;flex:1;}
+
+/* ══ PAGES ══ */
+.page{display:none;}.page.active{display:block;}
+
+/* ══ NOTIF BANNER ══ */
+.ntf{background:linear-gradient(135deg,var(--green),#178a38);color:#fff;padding:13px 20px;border-radius:11px;margin-bottom:16px;display:none;align-items:center;gap:11px;}
+.ntf.show{display:flex;animation:sIn .35s ease both;}
+.ntf p{flex:1;font-size:.88rem;font-weight:600;}
+.ntf button{background:rgba(255,255,255,.18);border:none;color:#fff;padding:5px 12px;border-radius:7px;cursor:pointer;font-family:'Tajawal',sans-serif;font-size:.78rem;}
+@keyframes sIn{from{opacity:0;transform:translateY(-8px);}to{opacity:1;transform:translateY(0);}}
+
+/* ══ STATS ══ */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px;}
+.sc{background:#fff;border-radius:13px;padding:18px;display:flex;align-items:center;gap:13px;box-shadow:0 3px 9px rgba(139,58,90,.06);}
+.sc-ic{width:46px;height:46px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:1.35rem;flex-shrink:0;}
+.sc-info h3{font-size:1.55rem;font-weight:900;color:var(--deep);}
+.sc-info p{font-size:.75rem;color:var(--mid);margin-top:2px;}
+
+/* ══ SECTION CARD ══ */
+.card{background:#fff;border-radius:14px;padding:20px;box-shadow:0 3px 9px rgba(139,58,90,.06);margin-bottom:18px;}
+.card h3{font-size:.97rem;font-weight:700;color:var(--deep);margin-bottom:14px;}
+
+/* ══ FILTER TABS ══ */
+.ftabs{display:flex;gap:7px;margin-bottom:14px;flex-wrap:wrap;}
+.ft{background:#f5f0f2;border:none;border-radius:50px;padding:6px 13px;font-family:'Tajawal',sans-serif;font-size:.78rem;cursor:pointer;transition:all .3s;color:var(--mid);}
+.ft:hover,.ft.active{background:var(--deep);color:#fff;}
+
+/* ══ ORDER CARD ══ */
+.oc{background:#faf5f7;border:1px solid #e8d8e0;border-radius:13px;padding:15px;margin-bottom:9px;transition:box-shadow .3s;}
+.oc:hover{box-shadow:0 4px 16px rgba(139,58,90,.1);}
+.oc-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:9px;}
+.oc-id{font-size:.71rem;color:#aaa;display:block;margin-bottom:2px;}
+.oc-name{font-size:.95rem;font-weight:700;color:var(--deep);}
+.oc-info{font-size:.78rem;color:var(--mid);margin-top:2px;line-height:1.6;}
+.sbg{border-radius:50px;padding:3px 10px;font-size:.7rem;font-weight:700;white-space:nowrap;}
+.s-new{background:#e3f2fd;color:#1565c0;}.s-confirmed{background:#fff9c4;color:#f57f17;}
+.s-shipped{background:#e8f5e9;color:#2e7d32;}.s-delivered{background:#c8e6c9;color:#1b5e20;}.s-cancelled{background:#ffebee;color:#b71c1c;}
+.oc-items{font-size:.78rem;color:var(--mid);margin-bottom:8px;line-height:1.7;}
+.oc-total{font-size:.95rem;font-weight:700;color:var(--rose);margin-bottom:8px;}
+.oc-acts{display:flex;gap:6px;flex-wrap:wrap;align-items:center;}
+.oa{border:none;border-radius:8px;padding:7px 12px;font-family:'Tajawal',sans-serif;font-size:.78rem;font-weight:600;cursor:pointer;transition:all .3s;}
+.oa-wa{background:#25D366;color:#fff;}.oa-wa:hover{opacity:.85;}
+.oa-del{background:#ffebee;color:var(--red);border:1px solid #ffc9c9;}.oa-del:hover{background:var(--red);color:#fff;}
+.st-sel{border:1.5px solid #e0d0d8;border-radius:8px;padding:6px 9px;font-family:'Tajawal',sans-serif;font-size:.78rem;color:var(--deep);cursor:pointer;background:#fff;}
+.st-sel:focus{outline:none;border-color:var(--rose);}
+.no-data{text-align:center;padding:40px;color:#bbb;}
+.no-data .ic{font-size:3.6rem;display:block;margin-bottom:9px;}
+
+/* ══ ADD PRODUCT FORM ══ */
+.add-form{background:#faf5f7;border-radius:11px;padding:18px;margin-bottom:18px;border:1px solid #e8d8e0;}
+.add-form h4{font-size:.93rem;font-weight:700;color:var(--deep);margin-bottom:13px;}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.frow3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;}
+.fg{margin-bottom:10px;}
+.fg label{font-size:.75rem;color:var(--mid);font-weight:600;display:block;margin-bottom:3px;}
+.fi{width:100%;padding:8px 10px;border:1.5px solid #e0d0d8;border-radius:8px;font-family:'Tajawal',sans-serif;font-size:.83rem;color:var(--dark);background:#fff;transition:border .3s;}
+.fi:focus{outline:none;border-color:var(--rose);}
+.img-prv{width:72px;height:72px;object-fit:cover;border-radius:9px;border:1.5px solid #e0d0d8;display:none;margin-top:5px;}
+.sbtn{background:linear-gradient(135deg,var(--rose),var(--deep));color:#fff;border:none;padding:10px 22px;border-radius:9px;font-family:'Tajawal',sans-serif;font-size:.9rem;font-weight:700;cursor:pointer;transition:opacity .3s;}
+.sbtn:hover{opacity:.9;}
+
+/* ══ PRODUCTS GRID ══ */
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;}
+.pac{background:#faf5f7;border:1px solid #e8d8e0;border-radius:11px;overflow:hidden;}
+.pac-img{width:100%;height:110px;object-fit:cover;}
+.pac-ph{width:100%;height:110px;display:flex;align-items:center;justify-content:center;font-size:2.8rem;}
+.pac-info{padding:10px;}
+.pac-info h4{font-size:.82rem;font-weight:700;color:var(--deep);margin-bottom:2px;}
+.pac-info .cat{font-size:.72rem;color:var(--mid);}
+.pac-info .pp{color:var(--rose);font-weight:700;font-size:.85rem;margin-top:3px;}
+.pac-acts{display:flex;gap:5px;padding:0 10px 10px;}
+.pa{flex:1;border:none;border-radius:7px;padding:6px;font-family:'Tajawal',sans-serif;font-size:.74rem;cursor:pointer;transition:all .3s;}
+.pa-edit{background:var(--soft);color:var(--deep);}.pa-edit:hover{background:var(--deep);color:#fff;}
+.pa-del{background:#ffebee;color:var(--red);}.pa-del:hover{background:var(--red);color:#fff;}
+
+/* ══ EDIT MODAL ══ */
+.emodal{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:400;display:none;align-items:center;justify-content:center;padding:14px;}
+.emodal.open{display:flex;}
+.ebox{background:#fff;border-radius:18px;width:100%;max-width:560px;max-height:90vh;overflow-y:auto;padding:26px;}
+.ebox h3{font-size:1.1rem;font-weight:700;color:var(--deep);margin-bottom:16px;}
+.eclose{background:#f5f0f2;border:none;float:left;width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:.9rem;display:flex;align-items:center;justify-content:center;margin-bottom:10px;}
+
+/* ══ SETTINGS ══ */
+.set-box{background:#fff;border-radius:12px;padding:18px;margin-bottom:13px;border:1px solid #e8d8e0;}
+.set-box h4{font-size:.93rem;font-weight:700;color:var(--deep);margin-bottom:12px;}
+.set-row{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid #f5edf0;gap:10px;flex-wrap:wrap;}
+.set-row:last-child{border-bottom:none;}
+.set-row label{font-size:.84rem;color:var(--mid);flex-shrink:0;}
+.si{border:1.5px solid #e0d0d8;border-radius:8px;padding:7px 11px;font-family:'Tajawal',sans-serif;font-size:.84rem;flex:1;min-width:0;}
+.si:focus{outline:none;border-color:var(--rose);}
+.ss{background:var(--deep);color:#fff;border:none;border-radius:8px;padding:7px 15px;font-family:'Tajawal',sans-serif;font-size:.82rem;cursor:pointer;flex-shrink:0;transition:background .3s;}
+.ss:hover{background:var(--rose);}
+.how-box{background:#f9f5f7;border-radius:9px;padding:14px;font-size:.84rem;color:var(--mid);line-height:2.1;}
+
+/* ══ TOAST ══ */
+.toast{position:fixed;bottom:20px;left:20px;background:var(--deep);color:#fff;padding:10px 16px;border-radius:9px;font-size:.85rem;z-index:9000;transform:translateY(100px);opacity:0;transition:all .4s;display:flex;align-items:center;gap:6px;}
+.toast.show{transform:translateY(0);opacity:1;}
+
+@media(max-width:900px){
+  .sidebar{transform:translateX(100%);transition:transform .3s;}.sidebar.open{transform:translateX(0);}
+  .main{margin-right:0;}.stats{grid-template-columns:1fr 1fr;}.frow,.frow3{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ LOGIN ══ -->
+<div id="loginWrap">
+  <div class="lbox">
+    <div class="logo"><span>Cosmo</span> Brand</div>
+    <span class="icon">🔐</span>
+    <p class="sub">أدخل كلمة المرور للدخول</p>
+    <input class="pinp" id="pinp" type="password" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="lbtn" onclick="doLogin()">دخول لوحة التحكم ←</button>
+    <p class="lerr" id="lerr">❌ كلمة المرور غلط، حاول تاني</p>
+    <p class="lnote">كلمة المرور الافتراضية: <strong>1234</strong></p>
+  </div>
+</div>
+
+<!-- ══ APP ══ -->
+<div id="appWrap">
+<div class="layout">
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="sb-top">
+    <div class="logo"><span>Cosmo</span> Brand</div>
+    <small>لوحة التحكم · Admin</small>
+  </div>
+  <nav class="sb-menu">
+    <div class="ni active" id="ni-db"      onclick="goTo('dashboard',this)"><span class="ic">📊</span> الرئيسية</div>
+    <div class="ni"        id="ni-orders"  onclick="goTo('orders',this)">   <span class="ic">📋</span> الطلبات  <span class="ndot" id="nDot" style="display:none">0</span></div>
+    <div class="ni"        id="ni-prods"   onclick="goTo('products',this)"> <span class="ic">📦</span> المنتجات</div>
+    <div class="ni"        id="ni-cfg"     onclick="goTo('settings',this)"> <span class="ic">⚙️</span> الإعدادات</div>
+    <div class="ni" style="margin-top:18px;opacity:.6" onclick="window.open('/','_blank')"><span class="ic">🌐</span> فتح المتجر</div>
+    <div class="ni" style="opacity:.6" onclick="doLogout()"><span class="ic">↩️</span> خروج</div>
+  </nav>
+  <div class="sb-bot">
+    <div class="fb-row"><div class="fb-dot" id="fbDot"></div><span class="fb-lbl" id="fbLbl">جاري الاتصال…</span></div>
+    <small id="lastUp">—</small>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<div class="main">
+  <div class="topbar">
+    <h2 id="ptitle">📊 الرئيسية</h2>
+    <div class="tb-r">
+      <span class="tb-date" id="dLbl">—</span>
+      <button class="out-btn" onclick="doLogout()">↩️ خروج</button>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- Notif banner -->
+    <div class="ntf" id="ntf">
+      <span style="font-size:1.4rem">🔔</span>
+      <p id="ntfTxt">وصل طلب جديد!</p>
+      <button onclick="goTo('orders',document.getElementById('ni-orders'));hideNtf()">شوف الطلبات</button>
+    </div>
+
+    <!-- ── DASHBOARD ── -->
+    <div class="page active" id="page-dashboard">
+      <div class="stats">
+        <div class="sc"><div class="sc-ic" style="background:#fce4ec">📋</div><div class="sc-info"><h3 id="stT">0</h3><p>إجمالي الطلبات</p></div></div>
+        <div class="sc"><div class="sc-ic" style="background:#e3f2fd">🆕</div><div class="sc-info"><h3 id="stN">0</h3><p>طلبات جديدة</p></div></div>
+        <div class="sc"><div class="sc-ic" style="background:#fff9c4">🚚</div><div class="sc-info"><h3 id="stS">0</h3><p>قيد الشحن</p></div></div>
+        <div class="sc"><div class="sc-ic" style="background:#e8f5e9">💰</div><div class="sc-info"><h3 id="stR">0</h3><p>إيرادات (ج.م)</p></div></div>
+      </div>
+      <div class="card"><h3>🕐 آخر الطلبات</h3><div id="recentList"></div></div>
+    </div>
+
+    <!-- ── ORDERS ── -->
+    <div class="page" id="page-orders">
+      <div class="ftabs">
+        <button class="ft active" onclick="setFilter('all',this)">الكل</button>
+        <button class="ft" onclick="setFilter('new',this)">🆕 جديد</button>
+        <button class="ft" onclick="setFilter('confirmed',this)">✅ مؤكد</button>
+        <button class="ft" onclick="setFilter('shipped',this)">🚚 شحن</button>
+        <button class="ft" onclick="setFilter('delivered',this)">🎉 تم التوصيل</button>
+        <button class="ft" onclick="setFilter('cancelled',this)">❌ ملغي</button>
+      </div>
+      <div id="ordersList"></div>
+    </div>
+
+    <!-- ── PRODUCTS ── -->
+    <div class="page" id="page-products">
+      <div class="add-form">
+        <h4>➕ إضافة منتج أو باقة جديدة</h4>
+        <div class="frow">
+          <div class="fg"><label>اسم المنتج</label><input class="fi" id="nNm" placeholder="باقة التفتيح الذهبية"></div>
+          <div class="fg"><label>إيموجي (لو مفيش صورة)</label><input class="fi" id="nEm" placeholder="☀️" style="text-align:center;font-size:1.2rem"></div>
+        </div>
+        <div class="fg">
+          <label>🖼️ رابط صورة المنتج — ارفع على <strong>imgbb.com</strong> وانسخ "Direct link"</label>
+          <input class="fi" id="nIm" placeholder="https://i.ibb.co/xxxxxx/photo.jpg" oninput="prvImg('nIm','nPrv')">
+          <img id="nPrv" class="img-prv">
+        </div>
+        <div class="frow3">
+          <div class="fg"><label>السعر (ج.م)</label><input class="fi" id="nPr" type="number" placeholder="299"></div>
+          <div class="fg"><label>السعر القديم</label><input class="fi" id="nOp" type="number" placeholder="اختياري"></div>
+          <div class="fg"><label>الشارة</label>
+            <select class="fi" id="nBd"><option value="">بدون شارة</option><option value="جديد">🟢 جديد</option><option value="خصم">🔴 خصم</option><option value="الأفضل">⭐ الأفضل</option></select>
+          </div>
+        </div>
+        <div class="frow">
+          <div class="fg"><label>الفئة</label>
+            <select class="fi" id="nCt">
+              <option value="acne">🫧 علاج حب الشباب</option>
+              <option value="brightening">☀️ باقات التفتيح</option>
+              <option value="moisturizing">💧 المرطبات</option>
+              <option value="hairloss">🌱 علاج التساقط</option>
+              <option value="dandruff">❄️ علاج القشرة</option>
+              <option value="haircare">💆‍♀️ ترطيب الشعر</option>
+              <option value="makeup">💄 المكياج</option>
+              <option value="perfume">🌸 العطور</option>
+            </select>
+          </div>
+          <div class="fg"><label>محتويات الباقة (افصل بـ +)</label><input class="fi" id="nDs" placeholder="غسول + تونر + كريم"></div>
+        </div>
+        <div class="fg"><label>تفاصيل إضافية (تظهر لما العميل يضغط على المنتج)</label>
+          <textarea class="fi" id="nDt" rows="2" style="resize:none" placeholder="وصف تفصيلي — نتائج، مدة الاستخدام…"></textarea>
+        </div>
+        <button class="sbtn" onclick="addProd()">✅ إضافة للمتجر الآن</button>
+      </div>
+      <div class="card">
+        <h3>📦 المنتجات الحالية في المتجر — <span id="pCnt">0</span> منتج</h3>
+        <div class="pgrid" id="pGrid"></div>
+      </div>
+    </div>
+
+    <!-- ── SETTINGS ── -->
+    <div class="page" id="page-settings">
+      <div class="set-box">
+        <h4>📱 رقم الواتساب — يتحدث فوراً على المتجر</h4>
+        <div class="set-row">
+          <label>الرقم (مع كود الدولة بدون +)</label>
+          <div style="display:flex;gap:7px;flex:1"><input class="si" id="siWA" placeholder="201125696178"><button class="ss" onclick="saveCfg('whatsapp','siWA')">💾 حفظ</button></div>
+        </div>
+        <p style="font-size:.76rem;color:#aaa;margin-top:5px">مثال صحيح: 201125696178 (كود مصر 20 + الرقم بدون الصفر الأول)</p>
+      </div>
+
+      <div class="set-box">
+        <h4>🔐 كلمة مرور لوحة التحكم</h4>
+        <div class="set-row">
+          <label>كلمة مرور جديدة</label>
+          <div style="display:flex;gap:7px;flex:1"><input class="si" id="siPs" type="password" placeholder="اكتب كلمة مرور جديدة"><button class="ss" onclick="changePw()">🔄 تغيير</button></div>
+        </div>
+        <p style="font-size:.76rem;color:#aaa;margin-top:5px">⚠️ بعد الحفظ ستحتاجها في المرة القادمة — لا تنساها</p>
+      </div>
+
+      <div class="set-box">
+        <h4>🖼️ كيف تضيف صور للمنتجات</h4>
+        <div class="how-box">
+          1️⃣ روح على <strong>imgbb.com</strong> وسجل دخول (مجاني)<br>
+          2️⃣ ارفع صورة المنتج<br>
+          3️⃣ بعد الرفع انسخ <strong>"Direct link"</strong><br>
+          4️⃣ الصق الرابط في خانة "رابط صورة المنتج"<br>
+          5️⃣ أو اضغط "✏️ تعديل" على منتج موجود لتضيف صورة له
+        </div>
+      </div>
+
+      <div class="set-box">
+        <h4>🗑️ إدارة البيانات</h4>
+        <div class="set-row"><label>مسح الطلبات المكتملة والملغية</label><button class="ss" style="background:var(--orange)" onclick="clearDone()">مسح المكتملة</button></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+</div>
+
+<!-- ══ EDIT PRODUCT MODAL ══ -->
+<div class="emodal" id="eModal">
+  <div class="ebox">
+    <button class="eclose" onclick="closeEdit()" style="float:left">✕</button>
+    <h3>✏️ تعديل المنتج</h3>
+    <input type="hidden" id="eKey">
+    <div class="frow">
+      <div class="fg"><label>اسم المنتج</label><input class="fi" id="eNm"></div>
+      <div class="fg"><label>الإيموجي</label><input class="fi" id="eEm" style="text-align:center;font-size:1.2rem"></div>
+    </div>
+    <div class="fg">
+      <label>🖼️ رابط الصورة</label>
+      <input class="fi" id="eIm" placeholder="https://i.ibb.co/…" oninput="prvImg('eIm','ePrv')">
+      <img id="ePrv" class="img-prv">
+    </div>
+    <div class="frow3">
+      <div class="fg"><label>السعر (ج.م)</label><input class="fi" id="ePr" type="number"></div>
+      <div class="fg"><label>السعر القديم</label><input class="fi" id="eOp" type="number"></div>
+      <div class="fg"><label>الشارة</label>
+        <select class="fi" id="eBd"><option value="">بدون</option><option value="جديد">🟢 جديد</option><option value="خصم">🔴 خصم</option><option value="الأفضل">⭐ الأفضل</option></select>
+      </div>
+    </div>
+    <div class="frow">
+      <div class="fg"><label>الفئة</label>
+        <select class="fi" id="eCt">
+          <option value="acne">🫧 علاج حب الشباب</option><option value="brightening">☀️ التفتيح</option>
+          <option value="moisturizing">💧 المرطبات</option><option value="hairloss">🌱 التساقط</option>
+          <option value="dandruff">❄️ القشرة</option><option value="haircare">💆‍♀️ ترطيب الشعر</option>
+          <option value="makeup">💄 مكياج</option><option value="perfume">🌸 عطور</option>
+        </select>
+      </div>
+      <div class="fg"><label>محتويات الباقة</label><input class="fi" id="eDs"></div>
+    </div>
+    <div class="fg"><label>تفاصيل إضافية</label><textarea class="fi" id="eDt" rows="2" style="resize:none"></textarea></div>
+    <div style="display:flex;gap:9px;margin-top:6px">
+      <button class="sbtn" onclick="saveEdit()">💾 حفظ التعديلات</button>
+      <button onclick="closeEdit()" style="background:#f5f0f2;border:none;padding:10px 18px;border-radius:8px;font-family:'Tajawal',sans-serif;font-size:.88rem;cursor:pointer">إلغاء</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"><span id="tic">✅</span><span id="tmg"></span></div>
+
+<script type="module">
+import { initializeApp }                                            from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getDatabase, ref, onValue, push, set, remove, update }    from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+/* ── Firebase ── */
+const db = getDatabase(initializeApp({
+  apiKey:"AIzaSyBDUzmVCOB9HK_g5iB4wm_UAjw0jAvhr8k",
+  authDomain:"cosmo-brand.firebaseapp.com",
+  databaseURL:"https://cosmo-brand-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId:"cosmo-brand",
+  storageBucket:"cosmo-brand.firebasestorage.app",
+  messagingSenderId:"12821155095",
+  appId:"1:12821155095:web:b341ec9b1c34b9659a7b52"
+}));
+
+const catLbl={acne:'🫧 حب الشباب',brightening:'☀️ التفتيح',moisturizing:'💧 المرطبات',hairloss:'🌱 التساقط',dandruff:'❄️ القشرة',haircare:'💆‍♀️ ترطيب الشعر',makeup:'💄 مكياج',perfume:'🌸 عطور'};
+const stMap={new:{l:'🆕 جديد',c:'s-new'},confirmed:{l:'✅ مؤكد',c:'s-confirmed'},shipped:{l:'🚚 قيد الشحن',c:'s-shipped'},delivered:{l:'🎉 تم التوصيل',c:'s-delivered'},cancelled:{l:'❌ ملغي',c:'s-cancelled'}};
+const bgMap={acne:'linear-gradient(135deg,#e8f5e9,#f1f8e9)',brightening:'linear-gradient(135deg,#fff9e6,#fff3cd)',moisturizing:'linear-gradient(135deg,#e3f2fd,#e8eaf6)',hairloss:'linear-gradient(135deg,#f3e5f5,#fce4ec)',dandruff:'linear-gradient(135deg,#e0f7fa,#e8f5e9)',haircare:'linear-gradient(135deg,#fce4ec,#f8bbd0)',makeup:'linear-gradient(135deg,#fdf6f0,#fff)',perfume:'linear-gradient(135deg,#fdf6f0,#fce4ec)'};
+
+/* ── State ── */
+let PASS = localStorage.getItem('cosmo_pass') || '1234';
+let allOrders=[], allProds=[], prodKeys={}, firstLoad=true, curFilter='all';
+
+/* ══════════════════════════
+   LOGIN  —  works immediately
+   with localStorage password,
+   no Firebase needed
+══════════════════════════ */
+window.doLogin = () => {
+  const v = document.getElementById('pinp').value;
+  if(v === PASS){
+    document.getElementById('loginWrap').style.display='none';
+    document.getElementById('appWrap').style.display='block';
+    document.getElementById('dLbl').textContent = new Date().toLocaleDateString('ar-EG',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+    startFB();
+  } else {
+    document.getElementById('lerr').style.display='block';
+    document.getElementById('pinp').value='';
+  }
+};
+window.doLogout = () => { localStorage.removeItem('cosmo_loggedin'); location.reload(); };
+document.getElementById('pinp').addEventListener('keydown', e=>{ if(e.key==='Enter') window.doLogin(); });
+
+/* Load password from Firebase (updates local copy) */
+onValue(ref(db,'settings'), snap=>{
+  const s=snap.val()||{};
+  if(s.password){ PASS=s.password; localStorage.setItem('cosmo_pass',s.password); }
+  if(s.whatsapp){ document.getElementById('siWA').value=s.whatsapp; }
+});
+
+/* ══════════════════════════
+   FIREBASE LISTENERS
+   (start only after login)
+══════════════════════════ */
+function startFB(){
+  /* Orders */
+  onValue(ref(db,'orders'), snap=>{
+    const raw=snap.val()||{};
+    const arr=Object.entries(raw).map(([k,v])=>({...v,_k:k})).reverse();
+    if(!firstLoad && arr.length>allOrders.length){
+      playSound();
+      showNtf(`🔔 وصل ${arr.length-allOrders.length>1?'طلبات جديدة':'طلب جديد'} من ${arr[0]?.name||'عميل'}!`);
+    }
+    firstLoad=false; allOrders=arr;
+    updateStats(); renderRecent(); renderOrders();
+    document.getElementById('fbDot').className='fb-dot on';
+    document.getElementById('fbLbl').textContent='متصل ✅';
+    document.getElementById('lastUp').textContent='آخر تحديث: '+new Date().toLocaleTimeString('ar-EG');
+  }, ()=>{
+    document.getElementById('fbDot').className='fb-dot off';
+    document.getElementById('fbLbl').textContent='انقطع الاتصال ❌';
+  });
+
+  /* Products */
+  onValue(ref(db,'products'), snap=>{
+    const data=snap.val();
+    if(data){ allProds=Object.values(data); prodKeys=Object.fromEntries(Object.entries(data).map(([k,v])=>[v.id,k])); }
+    else{ allProds=defs(); set(ref(db,'products'),Object.fromEntries(allProds.map(p=>[p.id,p]))); }
+    renderProds();
+  });
+}
+
+/* ── Sound ── */
+function playSound(){
+  try{
+    const ctx=new(window.AudioContext||window.webkitAudioContext)();
+    [[520,0,.15],[660,.18,.15],[800,.36,.25],[660,.62,.15],[800,.8,.3]].forEach(([f,s,d])=>{
+      const o=ctx.createOscillator(),g=ctx.createGain();
+      o.connect(g);g.connect(ctx.destination);
+      o.frequency.value=f;o.type='sine';
+      g.gain.setValueAtTime(.3,ctx.currentTime+s);
+      g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+s+d);
+      o.start(ctx.currentTime+s);o.stop(ctx.currentTime+s+d);
+    });
+  }catch(e){}
+}
+function showNtf(m){document.getElementById('ntfTxt').textContent=m;document.getElementById('ntf').classList.add('show');}
+window.hideNtf=()=>document.getElementById('ntf').classList.remove('show');
+
+/* ── Stats ── */
+function updateStats(){
+  const nN=allOrders.filter(o=>o.status==='new').length;
+  const rv=allOrders.filter(o=>o.status!=='cancelled').reduce((s,o)=>s+(o.total||0),0);
+  document.getElementById('stT').textContent=allOrders.length;
+  document.getElementById('stN').textContent=nN;
+  document.getElementById('stS').textContent=allOrders.filter(o=>o.status==='shipped').length;
+  document.getElementById('stR').textContent=rv.toLocaleString('ar-EG');
+  const dot=document.getElementById('nDot');
+  if(nN>0){dot.style.display='flex';dot.textContent=nN;}else{dot.style.display='none';}
+}
+
+/* ── Order card ── */
+function mkCard(o){
+  const s=stMap[o.status]||stMap.new;
+  const opts=Object.entries(stMap).map(([k,v])=>`<option value="${k}" ${o.status===k?'selected':''}>${v.l}</option>`).join('');
+  const wa2='2'+o.phone.replace(/^0/,'');
+  return `
+  <div class="oc">
+    <div class="oc-top">
+      <div><span class="oc-id">${o.id} · ${o.date}</span>
+        <div class="oc-name">👤 ${o.name}</div>
+        <div class="oc-info">📱 ${o.phone}<br>📍 ${o.address}${o.notes?'<br>📝 '+o.notes:''}</div>
+      </div>
+      <span class="sbg ${s.c}">${s.l}</span>
+    </div>
+    <div class="oc-items">${(o.items||[]).map(i=>`${i.emoji} ${i.name} ×${i.qty}`).join(' · ')}</div>
+    <div class="oc-total">💰 ${(o.total||0).toLocaleString('ar-EG')} ج.م</div>
+    <div class="oc-acts">
+      <button class="oa oa-wa" onclick="contactCust('${o.name}','${o.id}','${wa2}','${o.status}')">💬 تواصل مع العميل</button>
+      <select class="st-sel" onchange="chStatus('${o._k}',this.value)">${opts}</select>
+      <button class="oa oa-del" onclick="delOrder('${o._k}')">🗑️ حذف</button>
+    </div>
+  </div>`;
+}
+function renderRecent(){const el=document.getElementById('recentList');el.innerHTML=allOrders.length?allOrders.slice(0,5).map(mkCard).join(''):'<div class="no-data"><span class="ic">📭</span><p>لا توجد طلبات بعد</p></div>';}
+window.setFilter=(f,el)=>{curFilter=f;document.querySelectorAll('.ft').forEach(b=>b.classList.remove('active'));el.classList.add('active');renderOrders();};
+function renderOrders(){const list=curFilter==='all'?allOrders:allOrders.filter(o=>o.status===curFilter);document.getElementById('ordersList').innerHTML=list.length?list.map(mkCard).join(''):'<div class="no-data"><span class="ic">📭</span><p>لا توجد طلبات في هذه الفئة</p></div>';}
+window.chStatus=(k,v)=>{update(ref(db,`orders/${k}`),{status:v});showToast('✅ تم تحديث حالة الطلب');};
+window.delOrder=(k)=>{if(!confirm('تأكيد الحذف؟'))return;remove(ref(db,`orders/${k}`));showToast('🗑️ تم حذف الطلب');};
+window.contactCust=(nm,id,wa2,st)=>{
+  const s=stMap[st]||stMap.new;
+  window.open(`https://wa.me/${wa2}?text=${encodeURIComponent(`أهلاً ${nm}! 🌸\nطلبك رقم *${id}* من Cosmo Brand\nالحالة: ${s.l}\n\nأي استفسار إحنا هنا 💖`)}`,'_blank');
+};
+
+/* ── Products ── */
+function renderProds(){
+  document.getElementById('pCnt').textContent=allProds.length;
+  const grid=document.getElementById('pGrid');
+  if(!allProds.length){grid.innerHTML='<p style="color:#bbb;font-size:.85rem">لا توجد منتجات</p>';return;}
+  grid.innerHTML=allProds.map(p=>{
+    const hasImg=p.imageUrl&&p.imageUrl.length>4;
+    const top=hasImg?`<img src="${p.imageUrl}" class="pac-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`:'';
+    const ph=`<div class="pac-ph" style="${hasImg?'display:none':''}background:${bgMap[p.category]||'#fdf6f0'}">${p.emoji}</div>`;
+    return `
+    <div class="pac">
+      ${top}${ph}
+      <div class="pac-info">
+        <h4>${p.name}</h4>
+        <div class="cat">${catLbl[p.category]||p.category}</div>
+        <div class="pp">${p.price} ج.م${p.oldPrice?` <span style="color:#aaa;text-decoration:line-through;font-size:.74rem">${p.oldPrice}</span>`:''}</div>
+      </div>
+      <div class="pac-acts">
+        <button class="pa pa-edit" onclick="openEdit('${prodKeys[p.id]||''}',${JSON.stringify(p).replace(/'/g,'&#39;')})">✏️ تعديل</button>
+        <button class="pa pa-del" onclick="delProd('${prodKeys[p.id]||''}')">🗑️ حذف</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+window.addProd=()=>{
+  const nm=document.getElementById('nNm').value.trim();
+  const em=document.getElementById('nEm').value.trim()||'🛍️';
+  const pr=parseInt(document.getElementById('nPr').value);
+  const op=parseInt(document.getElementById('nOp').value)||null;
+  const ct=document.getElementById('nCt').value;
+  const ds=document.getElementById('nDs').value.trim()||'—';
+  const dt=document.getElementById('nDt').value.trim()||'';
+  const bd=document.getElementById('nBd').value;
+  const im=document.getElementById('nIm').value.trim()||'';
+  if(!nm||!pr){showToast('⚠️ اكتب اسم المنتج والسعر','⚠️');return;}
+  const newKey=push(ref(db,'products')).key;
+  set(ref(db,`products/${newKey}`),{id:Date.now(),name:nm,emoji:em,price:pr,oldPrice:op,category:ct,desc:ds,details:dt,badge:bd,imageUrl:im,reviews:0});
+  ['nNm','nEm','nPr','nOp','nDs','nDt','nIm'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('nPrv').style.display='none';
+  showToast('✅ تم إضافة المنتج — ظهر في المتجر فوراً!');
+};
+
+window.openEdit=(key,p)=>{
+  if(typeof p==='string') p=JSON.parse(p);
+  document.getElementById('eKey').value=key;
+  document.getElementById('eNm').value=p.name||'';
+  document.getElementById('eEm').value=p.emoji||'';
+  document.getElementById('eIm').value=p.imageUrl||'';
+  document.getElementById('ePr').value=p.price||'';
+  document.getElementById('eOp').value=p.oldPrice||'';
+  document.getElementById('eBd').value=p.badge||'';
+  document.getElementById('eCt').value=p.category||'acne';
+  document.getElementById('eDs').value=p.desc||'';
+  document.getElementById('eDt').value=p.details||'';
+  const prv=document.getElementById('ePrv');
+  if(p.imageUrl&&p.imageUrl.length>4){prv.src=p.imageUrl;prv.style.display='block';}else{prv.style.display='none';}
+  document.getElementById('eModal').classList.add('open');
+};
+window.closeEdit=()=>document.getElementById('eModal').classList.remove('open');
+window.saveEdit=()=>{
+  const key=document.getElementById('eKey').value; if(!key)return;
+  update(ref(db,`products/${key}`),{
+    name:document.getElementById('eNm').value.trim(),
+    emoji:document.getElementById('eEm').value.trim()||'🛍️',
+    imageUrl:document.getElementById('eIm').value.trim()||'',
+    price:parseInt(document.getElementById('ePr').value),
+    oldPrice:parseInt(document.getElementById('eOp').value)||null,
+    badge:document.getElementById('eBd').value,
+    category:document.getElementById('eCt').value,
+    desc:document.getElementById('eDs').value.trim(),
+    details:document.getElementById('eDt').value.trim(),
+  });
+  window.closeEdit(); showToast('✅ تم التعديل — تحدّث في المتجر فوراً!');
+};
+window.delProd=(key)=>{if(!confirm('هل أنت متأكد من الحذف؟'))return;remove(ref(db,`products/${key}`));showToast('🗑️ تم الحذف من المتجر');};
+
+/* ── Settings ── */
+window.saveCfg=(field,inputId)=>{
+  const v=document.getElementById(inputId).value.trim();
+  if(!v){showToast('⚠️ الخانة فارغة','⚠️');return;}
+  update(ref(db,'settings'),{[field]:v});
+  showToast('✅ تم الحفظ — بيسري فوراً على المتجر!');
+};
+window.changePw=()=>{
+  const np=document.getElementById('siPs').value.trim();
+  if(!np||np.length<4){showToast('⚠️ كلمة المرور على الأقل 4 أرقام','⚠️');return;}
+  PASS=np; localStorage.setItem('cosmo_pass',np);
+  update(ref(db,'settings'),{password:np});
+  document.getElementById('siPs').value='';
+  showToast('✅ تم تغيير كلمة المرور!');
+};
+window.clearDone=()=>{
+  if(!confirm('هل أنت متأكد؟'))return;
+  allOrders.filter(o=>o.status==='delivered'||o.status==='cancelled').forEach(o=>remove(ref(db,`orders/${o._k}`)));
+  showToast('🗑️ تم مسح الطلبات المكتملة');
+};
+
+/* ── Img preview ── */
+window.prvImg=(iId,pId)=>{
+  const url=document.getElementById(iId).value.trim();
+  const img=document.getElementById(pId);
+  if(url){img.src=url;img.style.display='block';img.onerror=()=>{img.style.display='none';};}
+  else img.style.display='none';
+};
+
+/* ── Nav ── */
+const pages={dashboard:'📊 الرئيسية',orders:'📋 الطلبات',products:'📦 المنتجات',settings:'⚙️ الإعدادات'};
+window.goTo=(name,el)=>{
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.ni').forEach(n=>n.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  if(el) el.classList.add('active');
+  document.getElementById('ptitle').textContent=pages[name]||name;
+  if(name==='orders') renderOrders();
+  if(name==='products') renderProds();
+};
+
+/* ── Toast ── */
+function showToast(msg,ic='✅'){
+  const t=document.getElementById('toast');
+  document.getElementById('tmg').textContent=msg;
+  document.getElementById('tic').textContent=ic;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3500);
+}
+
+/* ── Default products ── */
+function defs(){return[
+  {id:1,name:'باقة علاج حب الشباب الأساسية',price:199,oldPrice:280,emoji:'🫧',category:'acne',badge:'الأفضل',desc:'غسول + تونر + كريم مضاد للبكتيريا',details:'روتين متكامل للتخلص من حب الشباب خلال 4 أسابيع.',reviews:512,imageUrl:''},
+  {id:2,name:'باقة حب الشباب المكثفة',price:349,oldPrice:450,emoji:'💊',category:'acne',badge:'خصم',desc:'سيروم سالسيليك + قناع + كريم ليلي',details:'للحالات المتوسطة. نتائج من الأسبوع الأول.',reviews:278,imageUrl:''},
+  {id:3,name:'باقة حب الشباب الشاملة',price:499,emoji:'🧪',category:'acne',badge:'جديد',desc:'7 منتجات لروتين صباحي ومسائي',details:'الحل الأشمل لعلاج حب الشباب 3 أشهر.',reviews:134,imageUrl:''},
+  {id:4,name:'باقة التفتيح الذهبية',price:279,oldPrice:360,emoji:'☀️',category:'brightening',badge:'خصم',desc:'سيروم فيتامين C + كريم تفتيح + واقي شمس',details:'تفتيح طبيعي وآمن خلال 6 أسابيع.',reviews:423,imageUrl:''},
+  {id:5,name:'باقة البشرة المضيئة',price:389,emoji:'✨',category:'brightening',badge:'الأفضل',desc:'نياسيناميد + كريم ليلي + سيروم التفتيح',details:'تضيء البشرة وتوحد لونها مع تقليل البقع.',reviews:317,imageUrl:''},
+  {id:6,name:'باقة التفتيح الفاخرة',price:549,emoji:'💛',category:'brightening',badge:'جديد',desc:'5 منتجات فاخرة لبشرة مشرقة',details:'مكونات فاخرة من أرقى الماركات.',reviews:98,imageUrl:''},
+  {id:7,name:'باقة الترطيب العميق',price:229,oldPrice:299,emoji:'💧',category:'moisturizing',badge:'خصم',desc:'هيالورونيك + كريم ترطيب + مصل مكثف',details:'ترطيب يدوم 24 ساعة للبشرة الجافة.',reviews:634,imageUrl:''},
+  {id:8,name:'باقة البشرة الجافة',price:319,emoji:'🌊',category:'moisturizing',badge:'الأفضل',desc:'كريم غني + زيت وجه + قناع أسبوعي',details:'تغذية عميقة للبشرة الجافة.',reviews:445,imageUrl:''},
+  {id:9,name:'باقة الترطيب الخفيف',price:189,emoji:'🧴',category:'moisturizing',badge:'',desc:'مناسبة للبشرة الدهنية والمختلطة',details:'ترطيب خفيف بدون دهون.',reviews:289,imageUrl:''},
+  {id:10,name:'باقة إيقاف التساقط',price:259,oldPrice:340,emoji:'🌱',category:'hairloss',badge:'خصم',desc:'شامبو كثافة + سيروم جذور + مكملات',details:'تقوية الجذور وتقليل التساقط من الأسبوع الثاني.',reviews:387,imageUrl:''},
+  {id:11,name:'باقة تكثيف الشعر',price:369,emoji:'💪',category:'hairloss',badge:'الأفضل',desc:'علاج ميزوثيرابي منزلي + بخاخ كثافة',details:'لتكثيف الشعر الخفيف وإعادة الكثافة الطبيعية.',reviews:512,imageUrl:''},
+  {id:12,name:'باقة التساقط الشاملة',price:489,emoji:'👑',category:'hairloss',badge:'جديد',desc:'6 منتجات لبرنامج 3 أشهر',details:'برنامج علاجي للتساقط الشديد.',reviews:156,imageUrl:''},
+  {id:13,name:'باقة علاج القشرة السريع',price:179,oldPrice:229,emoji:'❄️',category:'dandruff',badge:'خصم',desc:'شامبو زنك + بلسم مضاد للفطريات',details:'يتخلص من القشرة من أول استخدام.',reviews:298,imageUrl:''},
+  {id:14,name:'باقة فروة الرأس الصحية',price:279,emoji:'🌿',category:'dandruff',badge:'الأفضل',desc:'سيروم فروة رأس + شامبو طبي + قناع',details:'علاج شامل للقشرة وتهيج فروة الرأس.',reviews:341,imageUrl:''},
+  {id:15,name:'باقة القشرة المتقدمة',price:399,emoji:'🔬',category:'dandruff',badge:'',desc:'مناسبة للحالات المزمنة',details:'للحالات التي لم تستجب للعلاجات العادية.',reviews:112,imageUrl:''},
+  {id:16,name:'باقة الشعر الحريري',price:219,oldPrice:289,emoji:'💆‍♀️',category:'haircare',badge:'خصم',desc:'ماسك + بلسم ترطيب عميق + زيت أرغان',details:'لشعر ناعم ومرطب ولامع.',reviews:476,imageUrl:''},
+  {id:17,name:'باقة الشعر التالف',price:309,emoji:'🌺',category:'haircare',badge:'الأفضل',desc:'علاج كيراتين منزلي + سيروم إصلاح',details:'لإصلاح الشعر المتضرر من الصبغة والحرارة.',reviews:523,imageUrl:''},
+  {id:18,name:'باقة ترطيب الشعر الفاخرة',price:449,emoji:'✨',category:'haircare',badge:'جديد',desc:'5 منتجات لشعر ناعم ولامع',details:'باقة فاخرة لترطيب عميق ومستمر.',reviews:189,imageUrl:''},
+  {id:19,name:'أحمر شفاه مخملي دائم',price:89,emoji:'💄',category:'makeup',badge:'جديد',desc:'يدوم 16 ساعة + 20 درجة لون',details:'ثبات استثنائي وألوان غنية لكل مناسبة.',reviews:567,imageUrl:''},
+  {id:20,name:'عطر ورد الليل الرومانسي',price:450,emoji:'🌹',category:'perfume',badge:'',desc:'50 مل - عطر شرقي فاخر',details:'عطر دافئ وفاخر يدوم طوال اليوم.',reviews:89,imageUrl:''},
+];}
+</script>
+</body>
+</html>
