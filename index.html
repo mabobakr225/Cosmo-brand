@@ -1,70 +1,57 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cosmo Brand | عالم الجمال</title>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        :root { --main: #8b3a5a; --gold: #c9a84c; --bg: #fdf6f0; }
-        body { font-family: 'Tajawal', sans-serif; background: var(--bg); margin: 0; padding-bottom: 80px; }
-        .nav { background: white; padding: 15px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); position: sticky; top:0; z-index:100; }
-        
-        /* الأقسام */
-        .section-title { padding: 20px 5% 10px; font-weight: bold; color: var(--main); font-size: 1.2rem; }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 0 5%; }
-        .card { background: white; border-radius: 20px; padding: 10px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.03); }
-        .card img { width: 100%; height: 140px; object-fit: cover; border-radius: 15px; }
-        
-        /* المساعد الذكي */
-        .ai-btn { position: fixed; bottom: 20px; left: 20px; background: linear-gradient(135deg, var(--main), var(--gold)); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; z-index: 500; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
-        
-        /* الاختبار */
-        .quiz-box { background: white; margin: 15px 5%; padding: 20px; border-radius: 20px; border: 2px dashed var(--gold); text-align: center; }
-        
-        /* مودال */
-        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.8); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
-        .modal-content { background: white; width: 100%; max-width: 500px; border-radius: 25px; padding: 20px; max-height: 90vh; overflow-y: auto; }
-        
-        /* معرض قبل وبعد */
-        .gallery-scroll { display: flex; overflow-x: auto; gap: 15px; padding: 10px 5%; }
-        .g-card { min-width: 250px; background: white; border-radius: 15px; padding: 10px; }
-        .g-imgs { display: flex; gap: 5px; }
-        .g-imgs img { width: 50%; height: 120px; border-radius: 8px; object-fit: cover; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cosmo Brand | متجر التجميل</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+<style>
+    :root { --deep:#8b3a5a; --cream:#fdf6f0; --gold:#c9a84c; --text:#3a1a28; }
+    body { font-family: 'Tajawal', sans-serif; background: var(--cream); color: var(--text); margin: 0; padding-bottom: 50px; }
+    
+    /* الهيدر */
+    header { background: white; padding: 20px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 100; }
+    header h1 { margin: 0; color: var(--deep); font-size: 1.8rem; }
 
-        input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #eee; border-radius: 10px; box-sizing: border-box; }
-        .order-btn { background: var(--main); color: white; width: 100%; padding: 15px; border: none; border-radius: 15px; font-weight: bold; cursor: pointer; }
-        .expert-tip { background: #fff9e6; border-right: 4px solid var(--gold); padding: 10px; margin: 15px 0; font-size: 0.9rem; color: #7a5d00; border-radius: 5px; }
-    </style>
+    /* شبكة الباقات */
+    .container { padding: 20px 5%; display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; }
+    .product-card { background: white; border-radius: 15px; padding: 10px; text-align: center; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.03); transition: 0.3s; }
+    .product-card:hover { transform: translateY(-5px); }
+    .product-card img { width: 100%; height: 160px; object-fit: cover; border-radius: 10px; margin-bottom: 10px; }
+    .product-name { font-weight: bold; font-size: 1.1rem; }
+    .product-price { color: var(--deep); font-weight: bold; margin-top: 5px; }
+
+    /* المودال (نافذة تفاصيل الباقة) */
+    .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 1000; display: none; align-items: center; justify-content: center; padding: 15px; }
+    .modal-content { background: white; width: 100%; max-width: 450px; border-radius: 20px; padding: 20px; max-height: 90vh; overflow-y: auto; position: relative; }
+    .close-btn { position: absolute; top: 15px; left: 15px; font-size: 20px; cursor: pointer; color: #888; }
+    .main-img { width: 100%; height: 200px; object-fit: cover; border-radius: 15px; margin-bottom: 15px; }
+    
+    /* شكل محتويات الباقة */
+    .sub-items-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 15px 0; background: #fafafa; padding: 15px; border-radius: 15px; border: 1px dashed var(--gold); }
+    .sub-item { display: flex; align-items: center; gap: 10px; background: white; padding: 8px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
+    .sub-item img { width: 40px; height: 40px; border-radius: 5px; object-fit: cover; }
+    .sub-item span { font-size: 0.9rem; font-weight: bold; }
+
+    /* أزرار ومساعد ذكي */
+    .order-btn { background: var(--deep); color: white; width: 100%; border: none; padding: 15px; border-radius: 12px; font-size: 1.1rem; font-weight: bold; cursor: pointer; margin-top: 10px; }
+    .ai-fab { position: fixed; bottom: 20px; right: 20px; background: linear-gradient(45deg, var(--deep), var(--gold)); color: white; width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; box-shadow: 0 5px 15px rgba(139, 58, 90, 0.4); cursor: pointer; z-index: 500; }
+</style>
 </head>
 <body>
 
-<div class="nav"><h2>Cosmo Brand ✨</h2></div>
+<header>
+    <h1>Cosmo Brand ✨</h1>
+</header>
 
-<div class="quiz-box">
-    <h4>💡 محتارة تختاري إيه؟</h4>
-    <p style="font-size: 0.8rem;">جاوبي على سؤالين وهنرشحلك الباقة المثالية</p>
-    <button onclick="startQuiz()" style="background:var(--gold); color:white; border:none; padding:8px 20px; border-radius:20px; cursor:pointer;">ابدئي الاختبار</button>
+<div class="container" id="storeGrid">
+    <h3 style="grid-column: 1 / -1; text-align: center;">جاري جلب أحدث الباقات...</h3>
 </div>
 
-<div class="section-title">باقاتنا المميزة</div>
-<div class="grid" id="pGrid">جاري التحميل...</div>
+<div class="ai-fab" onclick="alert('مساعد Cosmo: سيتم تفعيل الذكاء الاصطناعي قريباً للتحدث مع العملاء!')">🤖</div>
 
-<div class="section-title">نتائج حقيقية (قبل وبعد)</div>
-<div class="gallery-scroll" id="gGrid"></div>
-
-<div class="section-title">تتبع أوردرك ونقاطك</div>
-<div style="padding: 0 5%;">
-    <input type="text" id="trackIn" placeholder="أدخل رقم موبايلك">
-    <button onclick="track()" style="width:100%; padding:10px; background:white; border:1px solid var(--main); color:var(--main); border-radius:10px;">استعلام</button>
-    <div id="trackOut" style="margin-top:10px; font-size:0.9rem; text-align:center;"></div>
-</div>
-
-<div class="ai-btn" onclick="toggleAI()">🤖</div>
-
-<div id="modal" class="modal">
-    <div class="modal-content" id="mBody"></div>
+<div id="productModal" class="modal">
+    <div class="modal-content" id="modalBody"></div>
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
@@ -80,91 +67,68 @@
     };
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
-    let allP = []; let config = {wa:"201125696178"};
 
-    db.collection("settings").doc("main").onSnapshot(d => { if(d.exists) config = d.data(); });
+    let allProducts = [];
 
-    // تحميل المنتجات
-    db.collection("products").onSnapshot(snap => {
-        let h = ''; allP = [];
-        snap.forEach(d => {
-            const p = d.data(); allP.push({id: d.id, ...p});
-            h += `<div class="card" onclick="openP('${d.id}')">
-                <img src="${p.imageUrl}">
-                <h4>${p.name}</h4>
-                <p style="color:var(--main); font-weight:bold;">${p.price} ج.م</p>
-                <small style="color:green;">+ ${p.points || 0} نقطة</small>
+    // جلب المنتجات بشكل لحظي من القاعدة
+    db.collection("products").orderBy("createdAt", "desc").onSnapshot(snap => {
+        let html = '';
+        allProducts = [];
+        snap.forEach(doc => {
+            const p = doc.data();
+            allProducts.push({ id: doc.id, ...p });
+            
+            html += `
+            <div class="product-card" onclick="openProduct('${doc.id}')">
+                <img src="${p.imageUrl || 'https://via.placeholder.com/150'}">
+                <div class="product-name">${p.name}</div>
+                <div class="product-price">${p.price} ج.م</div>
             </div>`;
         });
-        document.getElementById('pGrid').innerHTML = h;
+        document.getElementById('storeGrid').innerHTML = html || '<h3 style="grid-column:1/-1; text-align:center;">لا توجد باقات حالياً.</h3>';
     });
 
-    // تحميل المعرض
-    db.collection("gallery").onSnapshot(snap => {
-        let h = '';
-        snap.forEach(d => {
-            const g = d.data();
-            h += `<div class="g-card">
-                <p style="font-weight:bold; font-size:0.8rem; margin-bottom:5px;">${g.title}</p>
-                <div class="g-imgs"><img src="${g.before}"><img src="${g.after}"></div>
-            </div>`;
-        });
-        document.getElementById('gGrid').innerHTML = h;
-    });
-
-    function openP(id) {
-        const p = allP.find(x => x.id === id);
-        document.getElementById('mBody').innerHTML = `
-            <img src="${p.imageUrl}" style="width:100%; border-radius:15px; height:200px; object-fit:cover;">
-            <h2>${p.name}</h2>
-            <div class="expert-tip"><b>💡 نصيحة الخبير:</b><br>${p.expertTip || 'يُفضل استخدامه بانتظام لنتائج مثالية.'}</div>
-            <p><b>📦 المحتويات:</b> ${p.content}</p>
-            <input id="cName" placeholder="الاسم بالكامل">
-            <input id="cPhone" placeholder="رقم الموبايل">
-            <button class="order-btn" onclick="order('${p.id}')">تأكيد الطلب (+${p.points} نقطة)</button>
-            <button onclick="closeM()" style="width:100%; border:none; background:none; color:gray; margin-top:10px;">إغلاق</button>
-        `;
-        document.getElementById('modal').style.display = 'flex';
-    }
-
-    async function order(id) {
-        const p = allP.find(x => x.id === id);
-        const name = document.getElementById('cName').value;
-        const phone = document.getElementById('cPhone').value;
-        if(!name || !phone) return alert("يرجى ملء البيانات");
-
-        await db.collection("orders").add({
-            clientName: name, clientPhone: phone, productName: p.name,
-            pointsEarned: p.points, status: "قيد الانتظار", date: new Date()
-        });
-
-        const msg = encodeURIComponent(`طلب جديد من Cosmo:\nالعميل: ${name}\nالباقة: ${p.name}\nالسعر: ${p.price}`);
-        window.open(`https://wa.me/${config.wa}?text=${msg}`);
-    }
-
-    async function track() {
-        const phone = document.getElementById('trackIn').value;
-        const snap = await db.collection("orders").where("clientPhone", "==", phone).get();
-        if(snap.empty) return document.getElementById('trackOut').innerHTML = "لا يوجد طلبات لهذا الرقم";
+    // فتح تفاصيل الباقة
+    function openProduct(id) {
+        const p = allProducts.find(x => x.id === id);
         
-        let totalPoints = 0; let status = '';
-        snap.forEach(d => { 
-            totalPoints += Number(d.data().pointsEarned || 0);
-            status = d.data().status;
-        });
-        document.getElementById('trackOut').innerHTML = `حالة آخر أوردر: <b>${status}</b> <br> إجمالي نقاطك: <b style="color:var(--main);">${totalPoints} نقطة</b>`;
+        // تجهيز المنتجات الفرعية إن وجدت
+        let subItemsHtml = '';
+        if (p.subItems && p.subItems.length > 0) {
+            subItemsHtml = '<h4 style="margin: 10px 0 5px; color: var(--deep);">📦 محتويات الباقة:</h4><div class="sub-items-grid">';
+            p.subItems.forEach(item => {
+                subItemsHtml += `
+                <div class="sub-item">
+                    <img src="${item.img || 'https://via.placeholder.com/50'}">
+                    <span>${item.name}</span>
+                </div>`;
+            });
+            subItemsHtml += '</div>';
+        }
+
+        document.getElementById('modalBody').innerHTML = `
+            <span class="close-btn" onclick="closeModal()">✖</span>
+            <img class="main-img" src="${p.imageUrl || 'https://via.placeholder.com/300'}">
+            <h2>${p.name}</h2>
+            <p style="color:#666; font-size:0.95rem;">${p.details || 'لا يوجد وصف.'}</p>
+            
+            ${subItemsHtml}
+            
+            <h3 style="color:var(--gold); text-align:center;">السعر: ${p.price} ج.م</h3>
+            <button class="order-btn" onclick="orderNow('${p.name}', ${p.price})">🛒 اطلب عبر واتساب</button>
+        `;
+        document.getElementById('productModal').style.display = 'flex';
     }
 
-    function startQuiz() {
-        const cat = confirm("هل مشكلتك الأساسية في الشعر؟ (اضغط موافق للشعر، إلغاء للبشرة)");
-        const type = cat ? "hair" : "skin";
-        const match = allP.find(p => p.category === type);
-        if(match) openP(match.id);
-        else alert("جاري تجهيز باقات تناسب هذا الاختيار، تصفحي المتاح حالياً!");
+    function closeModal() {
+        document.getElementById('productModal').style.display = 'none';
     }
 
-    function toggleAI() { alert("مساعد Cosmo الذكي: يمكنني مساعدتك في اختيار الباقة بناءً على وصف مشكلتك، فقط اسأليني!"); }
-    function closeM() { document.getElementById('modal').style.display = 'none'; }
+    function orderNow(name, price) {
+        const waNumber = "201125696178"; // رقم الواتساب بتاعك
+        const text = encodeURIComponent(`مرحباً Cosmo، أرغب في طلب:\n📦 ${name}\n💰 السعر: ${price} ج.م`);
+        window.open(`https://wa.me/${waNumber}?text=${text}`);
+    }
 </script>
 </body>
 </html>
