@@ -1,584 +1,182 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cosmo Brand | متجر التجميل</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
-<style>
-:root{--rose:#c96a85;--deep:#8b3a5a;--cream:#fdf6f0;--gold:#c9a84c;--lg:#f0d98a;--dark:#1a0a10;--mid:#5c2d40;--text:#3a1a28;--soft:#f5e6ea;--green:#27ae60;--red:#e74c3c;}
-*{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'Tajawal',sans-serif;background:var(--cream);color:var(--text);overflow-x:hidden;}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cosmo Brand | متجر الجمال</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --deep:#8b3a5a; --gold:#c9a84c; --cream:#fdf6f0; }
+        body { font-family: 'Tajawal', sans-serif; background: var(--cream); margin: 0; padding: 0; }
+        
+        /* الهيدر */
+        nav { background: white; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; position: fixed; top: 0; width: 100%; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.1); box-sizing: border-box; }
+        .logo { font-weight: bold; color: var(--deep); font-size: 1.5rem; }
 
-/* ── NAV ── */
-nav{position:fixed;top:0;width:100%;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:15px 5%;background:rgba(253,246,240,.97);backdrop-filter:blur(14px);border-bottom:1px solid rgba(201,168,76,.2);}
-.logo{font-family:'Playfair Display',serif;font-size:1.85rem;color:var(--deep);}
-.logo span{color:var(--gold);font-style:italic;}
-.nav-links{display:flex;gap:24px;list-style:none;}
-.nav-links a{text-decoration:none;color:var(--mid);font-size:.92rem;font-weight:500;transition:color .3s;}
-.nav-links a:hover{color:var(--rose);}
-.nav-right{display:flex;align-items:center;gap:10px;}
-.cart-btn{background:var(--deep);color:#fff;border:none;border-radius:50px;padding:9px 18px;font-family:'Tajawal',sans-serif;font-size:.86rem;cursor:pointer;transition:all .3s;position:relative;}
-.cart-btn:hover{background:var(--rose);}
-.cbadge{position:absolute;top:-7px;left:-7px;background:var(--gold);color:var(--dark);border-radius:50%;width:21px;height:21px;font-size:.68rem;display:flex;align-items:center;justify-content:center;font-weight:700;}
-.track-btn{background:transparent;border:2px solid var(--gold);color:var(--gold);border-radius:50px;padding:7px 14px;font-family:'Tajawal',sans-serif;font-size:.8rem;cursor:pointer;transition:all .3s;}
-.track-btn:hover{background:var(--gold);color:var(--dark);}
+        .container { padding: 100px 5% 40px; }
+        
+        /* شبكة المنتجات */
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 20px; }
+        .product-card { background: white; border-radius: 20px; overflow: hidden; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: 0.3s; cursor: pointer; border: 1px solid #eee; }
+        .product-card:hover { transform: translateY(-5px); }
+        .product-img { width: 100%; height: 180px; object-fit: cover; background: #f9f9f9; }
+        .product-info { padding: 15px; }
+        .product-name { font-weight: bold; font-size: 1rem; margin-bottom: 8px; color: #333; }
+        .product-price { color: var(--deep); font-weight: bold; font-size: 1.1rem; }
 
-/* ── HERO ── */
-.hero{margin-top:68px;min-height:88vh;display:grid;grid-template-columns:1fr 1fr;position:relative;overflow:hidden;}
-.hero-text{display:flex;flex-direction:column;justify-content:center;padding:76px 5% 76px 56px;z-index:2;}
-.hero-badge{display:inline-block;background:linear-gradient(135deg,var(--lg),var(--gold));color:var(--dark);padding:5px 16px;border-radius:50px;font-size:.76rem;font-weight:700;letter-spacing:2px;margin-bottom:20px;width:fit-content;}
-.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,4vw,4rem);line-height:1.15;color:var(--deep);margin-bottom:16px;}
-.hero h1 em{color:var(--rose);font-style:italic;}
-.hero-p{font-size:.98rem;color:var(--mid);line-height:1.8;max-width:390px;margin-bottom:28px;}
-.hero-btns{display:flex;gap:12px;}
-.btn-primary{background:linear-gradient(135deg,var(--rose),var(--deep));color:#fff;padding:12px 28px;border:none;border-radius:50px;font-family:'Tajawal',sans-serif;font-size:.94rem;font-weight:600;cursor:pointer;transition:transform .3s,box-shadow .3s;text-decoration:none;display:inline-block;}
-.btn-primary:hover{transform:translateY(-3px);box-shadow:0 12px 26px rgba(201,106,133,.4);}
-.btn-outline{background:transparent;color:var(--deep);padding:12px 28px;border:2px solid var(--deep);border-radius:50px;font-family:'Tajawal',sans-serif;font-size:.94rem;font-weight:600;cursor:pointer;transition:all .3s;}
-.btn-outline:hover{background:var(--deep);color:#fff;}
-.hero-visual{position:relative;display:flex;align-items:center;justify-content:center;}
-.blob{position:absolute;width:460px;height:460px;background:radial-gradient(circle at 40% 50%,#e8a0b0 0%,rgba(232,160,176,.3) 50%,transparent 70%);border-radius:60% 40% 70% 30%/50% 60% 40% 50%;animation:blobFloat 8s ease-in-out infinite;}
-.hero-cards{position:relative;z-index:2;display:grid;grid-template-columns:1fr 1fr;gap:13px;padding:36px;}
-.hcard{background:#fff;border-radius:16px;padding:16px;text-align:center;box-shadow:0 7px 24px rgba(139,58,90,.1);transition:transform .3s;cursor:pointer;}
-.hcard:hover{transform:translateY(-6px);}
-.hcard:first-child{margin-top:24px;}
-.hcard .ic{font-size:2.6rem;margin-bottom:6px;display:block;}
-.hcard h3{font-size:.78rem;color:var(--deep);font-weight:600;margin-bottom:3px;}
-.hcard .pr{font-size:.84rem;color:var(--rose);font-weight:700;}
+        /* نافذة التفاصيل (Modal) */
+        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 1000; display: none; align-items: center; justify-content: center; padding: 20px; }
+        .modal-content { background: white; border-radius: 25px; max-width: 500px; width: 100%; padding: 25px; position: relative; max-height: 90vh; overflow-y: auto; }
+        .modal-img { width: 100%; border-radius: 15px; margin-bottom: 20px; height: 250px; object-fit: cover; }
+        .close-btn { position: absolute; top: 15px; left: 15px; font-size: 1.5rem; cursor: pointer; color: #999; }
+        .order-btn { background: var(--deep); color: white; border: none; padding: 15px; border-radius: 50px; width: 100%; font-size: 1.1rem; font-weight: bold; cursor: pointer; margin-top: 20px; }
 
-/* ── SECTIONS ── */
-.sec{padding:65px 5%;}
-.sec-hd{text-align:center;margin-bottom:40px;}
-.sec-hd h2{font-family:'Playfair Display',serif;font-size:2.1rem;color:var(--deep);margin-bottom:7px;}
-.sec-hd p{color:var(--mid);font-size:.93rem;}
-.gold-line{width:52px;height:3px;background:linear-gradient(90deg,var(--gold),var(--lg));margin:10px auto;border-radius:2px;}
+        /* أيقونة السلة العائمة */
+        .cart-float { position: fixed; bottom: 25px; right: 25px; background: var(--deep); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; cursor: pointer; z-index: 150; box-shadow: 0 4px 20px rgba(139, 58, 90, 0.4); }
 
-/* ── CATEGORIES ── */
-.cats{display:flex;gap:12px;overflow-x:auto;padding-bottom:7px;scrollbar-width:none;flex-wrap:wrap;}
-.cats::-webkit-scrollbar{display:none;}
-.pill{flex-shrink:0;background:#fff;border:2px solid transparent;border-radius:100px;padding:8px 18px;cursor:pointer;font-family:'Tajawal',sans-serif;font-size:.86rem;color:var(--mid);transition:all .3s;display:flex;align-items:center;gap:5px;box-shadow:0 2px 9px rgba(0,0,0,.05);}
-.pill:hover,.pill.active{background:var(--deep);color:#fff;border-color:var(--deep);transform:translateY(-2px);}
-
-/* ── PRODUCT GRID ── */
-.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:22px;margin-top:28px;}
-.card{background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 3px 14px rgba(139,58,90,.07);transition:transform .3s,box-shadow .3s;cursor:pointer;}
-.card:hover{transform:translateY(-6px);box-shadow:0 12px 32px rgba(139,58,90,.13);}
-.card-img{height:220px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
-.card-img img{width:100%;height:100%;object-fit:cover;}
-.card-img .card-emoji{font-size:4.5rem;position:absolute;}
-.prod-badge{position:absolute;top:10px;right:10px;padding:3px 9px;border-radius:50px;font-size:.68rem;font-weight:700;z-index:2;}
-.prod-badge.pb-best{background:var(--gold);color:var(--dark);}
-.prod-badge.pb-new{background:var(--rose);color:#fff;}
-.prod-badge.pb-sale{background:var(--red);color:#fff;}
-.card-body{padding:16px;}
-.brand-lbl{font-size:.68rem;color:var(--gold);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:3px;}
-.pname{font-size:.92rem;font-weight:600;color:var(--text);margin-bottom:5px;}
-.pdesc{font-size:.76rem;color:var(--mid);margin-bottom:8px;line-height:1.5;}
-.stars{color:var(--gold);font-size:.78rem;margin-bottom:8px;}
-.stars span{color:var(--mid);font-size:.74rem;margin-right:2px;}
-.card-foot{display:flex;align-items:center;justify-content:space-between;margin-top:8px;}
-.price{font-size:1rem;font-weight:700;color:var(--deep);}
-.price .old-p{font-size:.78rem;color:#aaa;text-decoration:line-through;font-weight:400;margin-right:4px;}
-.add-btn{background:var(--deep);color:#fff;border:none;border-radius:50px;padding:8px 16px;font-family:'Tajawal',sans-serif;font-size:.78rem;cursor:pointer;transition:all .3s;}
-.add-btn:hover{background:var(--rose);}
-.add-btn.added{background:var(--green);}
-.skeleton{background:linear-gradient(90deg,#f0e8ec 25%,#f8f0f4 50%,#f0e8ec 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:20px;height:300px;}
-@keyframes shimmer{0%{background-position:200% 0;}100%{background-position:-200% 0;}}
-
-/* ── PRODUCT DETAIL MODAL ── */
-.detail-modal{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:500;display:none;align-items:center;justify-content:center;padding:16px;}
-.detail-modal.open{display:flex;}
-.detail-box{background:#fff;border-radius:24px;width:100%;max-width:660px;max-height:90vh;overflow-y:auto;position:relative;animation:popIn .3s ease both;}
-@keyframes popIn{from{opacity:0;transform:scale(.93);}to{opacity:1;transform:scale(1);}}
-.d-close{position:absolute;top:14px;left:14px;background:rgba(0,0,0,.12);border:none;width:34px;height:34px;border-radius:50%;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2;}
-.d-close:hover{background:rgba(0,0,0,.22);}
-.d-img{width:100%;height:260px;object-fit:cover;border-radius:24px 24px 0 0;}
-.d-img-ph{width:100%;height:260px;display:flex;align-items:center;justify-content:center;font-size:6rem;border-radius:24px 24px 0 0;}
-.d-body{padding:22px 26px 26px;}
-.d-brand{font-size:.7rem;color:var(--gold);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:5px;}
-.d-name{font-family:'Playfair Display',serif;font-size:1.65rem;color:var(--deep);margin-bottom:8px;line-height:1.2;}
-.d-stars{color:var(--gold);font-size:.88rem;margin-bottom:12px;}
-.d-price{font-size:1.5rem;font-weight:900;color:var(--deep);margin-bottom:14px;}
-.d-price .d-old{font-size:1rem;color:#aaa;text-decoration:line-through;font-weight:400;margin-right:8px;}
-.d-section{margin-bottom:16px;}
-.d-section h4{font-size:.88rem;font-weight:700;color:var(--deep);margin-bottom:8px;}
-.d-tags{display:flex;flex-wrap:wrap;gap:8px;}
-.d-tag{background:var(--soft);color:var(--mid);padding:5px 12px;border-radius:50px;font-size:.8rem;}
-.d-details{font-size:.9rem;color:var(--mid);line-height:1.8;}
-.d-actions{display:flex;gap:10px;margin-top:18px;}
-.d-add{flex:1;background:linear-gradient(135deg,var(--rose),var(--deep));color:#fff;border:none;padding:14px;border-radius:12px;font-family:'Tajawal',sans-serif;font-size:.97rem;font-weight:700;cursor:pointer;}
-.d-add:hover{opacity:.9;}
-.d-wa{background:#25D366;color:#fff;border:none;padding:14px 18px;border-radius:12px;font-family:'Tajawal',sans-serif;font-size:.88rem;font-weight:600;cursor:pointer;white-space:nowrap;}
-.d-wa:hover{opacity:.9;}
-
-/* ── FOOTER ── */
-footer{background:var(--dark);color:rgba(255,255,255,.7);padding:50px 5% 24px;margin-top:64px;}
-.fg{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:32px;margin-bottom:30px;}
-.fb .logo{color:#fff;margin-bottom:10px;display:block;}
-.fb p{font-size:.84rem;line-height:1.7;max-width:220px;}
-.fc h4{color:var(--gold);font-size:.83rem;font-weight:700;letter-spacing:1px;margin-bottom:12px;}
-.fc ul{list-style:none;}
-.fc ul li{margin-bottom:8px;}
-.fc ul li a{color:rgba(255,255,255,.6);text-decoration:none;font-size:.83rem;transition:color .3s;}
-.fc ul li a:hover{color:#e8a0b0;}
-.fb2{border-top:1px solid rgba(255,255,255,.1);padding-top:18px;display:flex;justify-content:space-between;align-items:center;font-size:.79rem;}
-.socials{display:flex;gap:10px;}
-.sl{width:33px;height:33px;background:rgba(255,255,255,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.88rem;text-decoration:none;transition:background .3s;}
-.sl:hover{background:var(--rose);}
-
-/* ── CART ── */
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,.52);z-index:200;opacity:0;pointer-events:none;transition:opacity .3s;}
-.overlay.open{opacity:1;pointer-events:all;}
-.cart-panel{position:fixed;top:0;left:0;width:365px;height:100%;background:var(--cream);z-index:201;padding:24px;transform:translateX(-100%);transition:transform .4s cubic-bezier(.4,0,.2,1);overflow-y:auto;display:flex;flex-direction:column;}
-.cart-panel.open{transform:translateX(0);}
-.cart-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;}
-.cart-hd h3{font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--deep);}
-.x-btn{background:none;border:none;font-size:1.3rem;cursor:pointer;color:var(--mid);}
-.x-btn:hover{color:var(--rose);}
-.ci{display:flex;gap:10px;padding:12px 0;border-bottom:1px solid var(--soft);align-items:center;}
-.ci-thumb{width:42px;height:42px;border-radius:9px;object-fit:cover;flex-shrink:0;}
-.ci-emoji{font-size:2rem;width:42px;text-align:center;flex-shrink:0;}
-.ci-info{flex:1;}
-.ci-info h4{font-size:.83rem;color:var(--text);font-weight:600;}
-.ci-info p{font-size:.8rem;color:var(--rose);font-weight:700;}
-.ci-ctrl{display:flex;align-items:center;gap:6px;}
-.q-btn{width:26px;height:26px;background:var(--soft);border:none;border-radius:50%;cursor:pointer;font-size:.9rem;display:flex;align-items:center;justify-content:center;}
-.q-btn:hover{background:#e8a0b0;}
-.cart-ft{margin-top:14px;padding-top:14px;border-top:2px solid var(--soft);}
-.cart-tot{display:flex;justify-content:space-between;font-size:.97rem;font-weight:700;color:var(--deep);margin-bottom:12px;}
-.oform h4{font-size:.9rem;color:var(--deep);font-weight:700;margin-bottom:10px;margin-top:14px;}
-.oinput{width:100%;padding:10px 12px;border:1.5px solid #ddd;border-radius:9px;font-family:'Tajawal',sans-serif;font-size:.86rem;margin-bottom:8px;background:#fff;color:var(--text);transition:border .3s;}
-.oinput:focus{outline:none;border-color:var(--rose);}
-.wa-btn{width:100%;background:#25D366;color:#fff;border:none;padding:13px;border-radius:11px;font-family:'Tajawal',sans-serif;font-size:.95rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:opacity .3s;}
-.wa-btn:hover{opacity:.9;}
-.empty-cart{text-align:center;padding:32px 14px;color:var(--mid);}
-.empty-cart .ec-ic{font-size:3.4rem;display:block;margin-bottom:10px;}
-
-/* ── TRACK MODAL ── */
-.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:300;display:none;align-items:center;justify-content:center;}
-.modal-bg.open{display:flex;}
-.modal-box{background:#fff;border-radius:20px;padding:32px;width:90%;max-width:420px;text-align:center;}
-.modal-box h3{font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--deep);margin-bottom:8px;}
-.modal-box p{color:var(--mid);font-size:.88rem;margin-bottom:18px;}
-.track-inp{width:100%;padding:11px 14px;border:1.5px solid #ddd;border-radius:9px;font-family:'Tajawal',sans-serif;font-size:.9rem;margin-bottom:12px;text-align:center;letter-spacing:2px;}
-.track-inp:focus{outline:none;border-color:var(--rose);}
-.track-res{margin-top:14px;padding:14px;border-radius:12px;font-size:.9rem;display:none;text-align:right;line-height:1.8;}
-.track-res.found{background:#e8f5e9;color:#1b5e20;border:1px solid #c8e6c9;}
-.track-res.notfound{background:#ffebee;color:#b71c1c;border:1px solid #ffcdd2;}
-
-/* ── MISC ── */
-.wa-float{position:fixed;bottom:24px;left:24px;z-index:150;width:54px;height:54px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.65rem;cursor:pointer;box-shadow:0 5px 16px rgba(37,211,102,.5);animation:pulse 2.5s infinite;}
-.wa-float:hover{transform:scale(1.12);}
-.toast{position:fixed;bottom:24px;right:24px;background:var(--deep);color:#fff;padding:11px 18px;border-radius:10px;font-size:.88rem;z-index:600;transform:translateY(100px);opacity:0;transition:all .4s;display:flex;align-items:center;gap:7px;}
-.toast.show{transform:translateY(0);opacity:1;}
-
-/* ── AI ASSISTANT ── */
-.ai-float{position:fixed;bottom:24px;right:24px;z-index:150;width:58px;height:58px;background:linear-gradient(135deg,var(--rose),var(--deep));border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 5px 18px rgba(139,58,90,.45);transition:transform .3s;border:none;}
-.ai-float:hover{transform:scale(1.1);}
-.ai-float svg{width:28px;height:28px;fill:white;}
-.ai-modal{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:400;display:none;align-items:flex-end;justify-content:center;padding:0;}
-.ai-modal.open{display:flex;}
-.ai-box{background:#fff;border-radius:24px 24px 0 0;width:100%;max-width:520px;height:85vh;display:flex;flex-direction:column;animation:slideUp .35s ease both;}
-@keyframes slideUp{from{transform:translateY(100%);}to{transform:translateY(0);}}
-.ai-hd{padding:16px 20px 12px;border-bottom:1px solid #f0e8ec;display:flex;align-items:center;gap:12px;flex-shrink:0;}
-.ai-hd-icon{width:42px;height:42px;background:linear-gradient(135deg,var(--rose),var(--deep));border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.ai-hd-icon svg{width:22px;height:22px;fill:white;}
-.ai-hd-info h4{font-size:1rem;font-weight:700;color:var(--deep);margin-bottom:1px;}
-.ai-hd-info p{font-size:.75rem;color:var(--mid);}
-.ai-close{background:none;border:none;font-size:1.3rem;cursor:pointer;color:var(--mid);margin-right:auto;}
-.ai-msgs{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px;}
-.ai-msg{max-width:82%;padding:10px 14px;border-radius:16px;font-size:.88rem;line-height:1.6;}
-.ai-msg.bot{background:var(--soft);color:var(--text);align-self:flex-start;border-bottom-right-radius:4px;}
-.ai-msg.user{background:linear-gradient(135deg,var(--rose),var(--deep));color:#fff;align-self:flex-end;border-bottom-left-radius:4px;}
-.ai-msg.bot .ai-prod-card{background:#fff;border-radius:12px;padding:10px 12px;margin-top:8px;border:1px solid #e8d8e0;cursor:pointer;transition:box-shadow .3s;}
-.ai-msg.bot .ai-prod-card:hover{box-shadow:0 4px 14px rgba(139,58,90,.12);}
-.ai-msg.bot .ai-prod-card h5{font-size:.84rem;font-weight:700;color:var(--deep);margin-bottom:2px;}
-.ai-msg.bot .ai-prod-card p{font-size:.76rem;color:var(--mid);}
-.ai-msg.bot .ai-prod-card .apc-foot{display:flex;align-items:center;justify-content:space-between;margin-top:7px;}
-.ai-msg.bot .ai-prod-card .apc-price{font-size:.88rem;font-weight:700;color:var(--rose);}
-.ai-msg.bot .ai-prod-card .apc-add{background:var(--deep);color:#fff;border:none;border-radius:50px;padding:5px 12px;font-family:'Tajawal',sans-serif;font-size:.75rem;cursor:pointer;}
-.ai-typing{display:flex;gap:5px;align-items:center;padding:10px 14px;background:var(--soft);border-radius:16px;align-self:flex-start;border-bottom-right-radius:4px;}
-.ai-typing span{width:7px;height:7px;background:var(--mid);border-radius:50%;animation:dot 1.2s infinite;}
-.ai-typing span:nth-child(2){animation-delay:.2s;}
-.ai-typing span:nth-child(3){animation-delay:.4s;}
-@keyframes dot{0%,60%,100%{transform:translateY(0);}30%{transform:translateY(-6px);}}
-.ai-inp-row{padding:12px 14px;border-top:1px solid #f0e8ec;display:flex;gap:9px;flex-shrink:0;}
-.ai-inp{flex:1;border:1.5px solid #e0d0d8;border-radius:50px;padding:10px 16px;font-family:'Tajawal',sans-serif;font-size:.88rem;outline:none;transition:border .3s;}
-.ai-inp:focus{border-color:var(--rose);}
-.ai-send{background:linear-gradient(135deg,var(--rose),var(--deep));color:#fff;border:none;border-radius:50%;width:42px;height:42px;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:opacity .3s;}
-.ai-send:hover{opacity:.9;}
-@media(max-width:768px){.ai-float{bottom:86px;}}
-
-@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-12px);}}
-@keyframes pulse{0%,100%{box-shadow:0 5px 16px rgba(37,211,102,.5);}50%{box-shadow:0 5px 28px rgba(37,211,102,.8);}}
-@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
-@media(max-width:768px){.hero{grid-template-columns:1fr;}.hero-visual{display:none;}.fg{grid-template-columns:1fr 1fr;}.cart-panel{width:100%;}.nav-links{display:none;}.d-actions{flex-direction:column;}}
-</style>
+        /* --- استايل الـ AI --- */
+        .ai-icon { position: fixed; bottom: 100px; right: 25px; background: linear-gradient(135deg, #8b3a5a, #c9a84c); color: white; width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; cursor: pointer; z-index: 200; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+        .ai-window { position: fixed; bottom: 170px; right: 25px; width: 320px; background: white; border-radius: 20px; display: none; flex-direction: column; box-shadow: 0 10px 40px rgba(0,0,0,0.2); z-index: 200; overflow: hidden; border: 1px solid #f0f0f0; }
+        .ai-header { background: var(--deep); color: white; padding: 15px; display: flex; justify-content: space-between; align-items: center; font-weight: bold; }
+        .ai-body { padding: 15px; max-height: 350px; overflow-y: auto; font-size: 0.95rem; line-height: 1.6; background: #fafafa; }
+        .ai-footer { display: flex; padding: 10px; background: white; border-top: 1px solid #eee; }
+        .ai-footer input { flex: 1; border: 1px solid #eee; padding: 10px; border-radius: 10px; outline: none; margin-left: 8px; }
+        .ai-footer button { background: var(--deep); color: white; border: none; padding: 10px 15px; border-radius: 10px; cursor: pointer; }
+        .ai-msg { margin-bottom: 12px; padding: 10px; border-radius: 12px; max-width: 85%; }
+        .user-msg { background: #f5e6ea; align-self: flex-start; margin-right: auto; color: #8b3a5a; }
+        .bot-msg { background: white; border: 1px solid #eee; align-self: flex-end; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
+    </style>
 </head>
 <body>
 
 <nav>
-  <div class="logo"><span>Cosmo</span> Brand</div>
-  <ul class="nav-links">
-    <li><a href="#">الرئيسية</a></li>
-    <li><a href="#products">المنتجات</a></li>
-    <li><a href="#" onclick="openTrack()">تتبع طلبك</a></li>
-    <li><a href="#" onclick="waContact()">تواصلي معنا</a></li>
-  </ul>
-  <div class="nav-right">
-    <button class="track-btn" onclick="openTrack()">📦 تتبع طلبك</button>
-    <button class="cart-btn" onclick="toggleCart()">🛒 السلة <span class="cbadge" id="cartCount">0</span></button>
-  </div>
+    <div class="logo">Cosmo Brand</div>
 </nav>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-text">
-    <div class="hero-badge">✨ وصل حديثاً · مجموعة 2026</div>
-    <h1>جمالك، <em>أولويتنا</em> الأولى</h1>
-    <p class="hero-p">باقات متكاملة للعناية بالبشرة والشعر. جودة استثنائية بأسعار تناسبك في مصر.</p>
-    <div class="hero-btns">
-      <a href="#products" class="btn-primary">تسوقي الآن</a>
-      <button class="btn-outline" onclick="waContact()">تواصلي معنا</button>
-    </div>
-  </div>
-  <div class="hero-visual">
-    <div class="blob"></div>
-    <div class="hero-cards">
-      <div class="hcard" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})"><span class="ic">🫧</span><h3>علاج حب الشباب</h3><div class="pr">من 199 ج.م</div></div>
-      <div class="hcard" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})"><span class="ic">☀️</span><h3>باقة التفتيح</h3><div class="pr">من 279 ج.م</div></div>
-      <div class="hcard" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})"><span class="ic">🌱</span><h3>علاج التساقط</h3><div class="pr">من 259 ج.م</div></div>
-      <div class="hcard" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})"><span class="ic">💧</span><h3>باقة الترطيب</h3><div class="pr">من 229 ج.م</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- CATEGORIES -->
-<section class="sec">
-  <div class="sec-hd"><h2>تسوقي حسب الفئة</h2><div class="gold-line"></div><p>كل ما تحتاجينه في مكان واحد</p></div>
-  <div class="cats">
-    <button class="pill active" onclick="filterCat('all',this)"><span>🌟</span> الكل</button>
-    <button class="pill" onclick="filterCat('acne',this)"><span>🫧</span> علاج حب الشباب</button>
-    <button class="pill" onclick="filterCat('brightening',this)"><span>☀️</span> باقات التفتيح</button>
-    <button class="pill" onclick="filterCat('moisturizing',this)"><span>💧</span> المرطبات</button>
-    <button class="pill" onclick="filterCat('hairloss',this)"><span>🌱</span> علاج التساقط</button>
-    <button class="pill" onclick="filterCat('dandruff',this)"><span>❄️</span> علاج القشرة</button>
-    <button class="pill" onclick="filterCat('haircare',this)"><span>💆‍♀️</span> ترطيب الشعر</button>
-    <button class="pill" onclick="filterCat('makeup',this)"><span>💄</span> المكياج</button>
-    <button class="pill" onclick="filterCat('perfume',this)"><span>🌸</span> العطور</button>
-  </div>
-</section>
-
-<!-- PRODUCTS -->
-<section class="sec" style="padding-top:0" id="products">
-  <div class="sec-hd"><h2>الباقات والمنتجات</h2><div class="gold-line"></div><p>اضغطي على أي منتج لتري التفاصيل الكاملة</p></div>
-  <div class="pgrid" id="grid">
-    <div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <div class="fg">
-    <div class="fb"><span class="logo" style="font-size:1.6rem"><span style="color:var(--gold)">Cosmo</span> Brand</span><p>متجرك الأول للتجميل والعناية في مصر.</p></div>
-    <div class="fc"><h4>تسوقي</h4><ul><li><a href="#">علاج حب الشباب</a></li><li><a href="#">التفتيح</a></li><li><a href="#">المرطبات</a></li><li><a href="#">التساقط</a></li><li><a href="#">القشرة</a></li></ul></div>
-    <div class="fc"><h4>مساعدة</h4><ul><li><a href="#">الشحن</a></li><li><a href="#">الإرجاع</a></li><li><a href="#" onclick="openTrack()">تتبع الطلب</a></li></ul></div>
-    <div class="fc"><h4>تواصلي معنا</h4><ul><li><a id="waLink" href="#">📞 01125696178</a></li><li><a href="#">📍 القاهرة، مصر</a></li></ul></div>
-  </div>
-  <div class="fb2"><p>© 2026 Cosmo Brand. جميع الحقوق محفوظة.</p><div class="socials"><a href="#" class="sl">📸</a><a href="#" class="sl">▶️</a><a href="#" class="sl">💬</a></div></div>
-</footer>
-
-<!-- AI ASSISTANT BUTTON -->
-<button class="ai-float" onclick="openAI()" title="مستشارة الجمال الذكية">
-  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 0 2h-1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1 0-2h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2zm-3 9a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm6 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/></svg>
-</button>
-
-<!-- AI ASSISTANT MODAL -->
-<div class="ai-modal" id="aiModal">
-  <div class="ai-box">
-    <div class="ai-hd">
-      <div class="ai-hd-icon">
-        <svg viewBox="0 0 24 24"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 0 2h-1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1 0-2h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2zm-3 9a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm6 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/></svg>
-      </div>
-      <div class="ai-hd-info">
-        <h4>✨ مستشارة الجمال الذكية</h4>
-        <p>اسأليني عن مشكلتك وهرشحلك الباقة المناسبة</p>
-      </div>
-      <button class="ai-close" onclick="closeAI()">✕</button>
-    </div>
-    <div class="ai-msgs" id="aiMsgs"></div>
-    <div class="ai-inp-row">
-      <input class="ai-inp" id="aiInp" placeholder="اكتبي مشكلتك هنا…" onkeydown="if(event.key==='Enter')sendAI()">
-      <button class="ai-send" onclick="sendAI()">➤</button>
-    </div>
-  </div>
+<div class="container">
+    <div class="products-grid" id="productsGrid">جاري جلب الباقات...</div>
 </div>
 
-<div class="toast" id="toast"><span id="tic">✅</span><span id="tmsg"></span></div>
+<div id="productModal" class="modal">
+    <div class="modal-content" id="modalBody"></div>
+</div>
 
-<script type="module">
-import { initializeApp }                              from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getDatabase, ref, onValue, push, set, get } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+<div class="ai-icon" onclick="toggleAIChat()">✨</div>
 
-const FB={apiKey:"AIzaSyBDUzmVCOB9HK_g5iB4wm_UAjw0jAvhr8k",authDomain:"cosmo-brand.firebaseapp.com",databaseURL:"https://cosmo-brand-default-rtdb.europe-west1.firebasedatabase.app",projectId:"cosmo-brand",storageBucket:"cosmo-brand.firebasestorage.app",messagingSenderId:"12821155095",appId:"1:12821155095:web:b341ec9b1c34b9659a7b52"};
-const db=getDatabase(initializeApp(FB));
+<div id="aiChat" class="ai-window">
+    <div class="ai-header">
+        <span>مساعد Cosmo الذكي</span>
+        <span onclick="toggleAIChat()" style="cursor:pointer">✕</span>
+    </div>
+    <div id="aiBody" class="ai-body">
+        <div class="ai-msg bot-msg">أهلاً بكِ! اذكر لي مشكلتكِ (مثل: جفاف، تساقط، قشرة) وسأرشح لكِ الباقة المناسبة فوراً.</div>
+    </div>
+    <div class="ai-footer">
+        <input type="text" id="aiInput" placeholder="اكتبي مشكلتك هنا..." onkeypress="if(event.key==='Enter') processAI()">
+        <button onclick="processAI()">إرسال</button>
+    </div>
+</div>
 
-const bgMap={acne:'linear-gradient(135deg,#e8f5e9,#f1f8e9)',brightening:'linear-gradient(135deg,#fff9e6,#fff3cd)',moisturizing:'linear-gradient(135deg,#e3f2fd,#e8eaf6)',hairloss:'linear-gradient(135deg,#f3e5f5,#fce4ec)',dandruff:'linear-gradient(135deg,#e0f7fa,#e8f5e9)',haircare:'linear-gradient(135deg,#fce4ec,#f8bbd0)',makeup:'linear-gradient(135deg,#fdf6f0,#fff)',perfume:'linear-gradient(135deg,#fdf6f0,#fce4ec)'};
+<div class="cart-float">🛒</div>
 
-let cart=[],activeCat='all',allProducts=[],WA='201125696178';
-let aiHistory=[];
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 
-/* ── Settings ── */
-onValue(ref(db,'settings'),snap=>{
-  const s=snap.val()||{};
-  if(s.whatsapp){WA=s.whatsapp;document.getElementById('waLink').href=`https://wa.me/${WA}`;}
-});
+<script>
+    // الإعدادات الخاصة بك
+    const firebaseConfig = {
+        apiKey: "AIzaSyBDUzmVCOB9HK_g5iB4wm_UAjw0jAvhr8k",
+        authDomain: "cosmo-brand.firebaseapp.com",
+        projectId: "cosmo-brand",
+        storageBucket: "cosmo-brand.firebasestorage.app",
+        messagingSenderId: "12821155095",
+        appId: "1:12821155095:web:af55925a7914027f9a7b52"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
 
-/* ── Products ── */
-onValue(ref(db,'products'),snap=>{
-  const data=snap.val();
-  if(data){allProducts=Object.values(data);}
-  else{allProducts=defaults();if(defaults().length)set(ref(db,'products'),Object.fromEntries(allProducts.map(p=>[p.id,p])));}
-  renderGrid(activeCat==='all'?allProducts:allProducts.filter(p=>p.category===activeCat));
-});
+    let allProducts = [];
 
-/* ── Grid ── */
-function renderGrid(list){
-  const g=document.getElementById('grid');
-  if(!list.length){g.innerHTML='<div style="text-align:center;color:var(--mid);padding:60px 20px;grid-column:1/-1"><div style="font-size:4rem;margin-bottom:16px">🌸</div><p style="font-size:1rem;font-weight:600;color:var(--deep)">قريباً — جاري إضافة الباقات</p><p style="font-size:.85rem;margin-top:6px">تابعونا للاطلاع على أحدث العروض</p></div>';return;}
-  g.innerHTML=list.map(p=>{
-    const hasImg=p.imageUrl&&p.imageUrl.length>4;
-    const imgPart=hasImg?`<img src="${p.imageUrl}" style="width:100%;height:100%;object-fit:cover" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`:'' ;
-    const emojiStyle=hasImg?'display:none;':'';
-    const badgeCls=p.badge==='جديد'?'pb-new':p.badge==='خصم'?'pb-sale':'pb-best';
-    return `
-    <div class="card" style="animation:fadeUp .5s ease both" onclick="openDetail(${p.id})">
-      <div class="card-img" style="${!hasImg?`background:${bgMap[p.category]||'#fdf6f0'}`:''}">
-        ${imgPart}
-        <div class="card-emoji" style="${emojiStyle}background:${bgMap[p.category]||'#fdf6f0'};width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:4.5rem">${p.emoji}</div>
-        ${p.badge?`<div class="prod-badge ${badgeCls}">${p.badge}</div>`:''}
-      </div>
-      <div class="card-body">
-        <div class="brand-lbl">Cosmo Brand</div>
-        <div class="pname">${p.name}</div>
-        <div class="pdesc">${p.desc||''}</div>
-        <div class="stars">★★★★★ <span>(${p.reviews||0})</span></div>
-        <div class="card-foot">
-          <div class="price">${p.oldPrice?`<span class="old-p">${p.oldPrice} ج.م</span>`:''}${p.price} ج.م</div>
-          <button class="add-btn" id="ab${p.id}" onclick="event.stopPropagation();doAdd('${p.name.replace(/'/g,"\\'")}',${p.price},'${p.emoji}','${p.imageUrl||''}',${p.id})">+ أضيفي</button>
-        </div>
-      </div>
-    </div>`;
-  }).join('');
-}
-window.filterCat=(cat,el)=>{activeCat=cat;document.querySelectorAll('.pill').forEach(p=>p.classList.remove('active'));el.classList.add('active');renderGrid(cat==='all'?allProducts:allProducts.filter(p=>p.category===cat));};
-
-/* ── Detail Modal ── */
-let _dp=null;
-window.openDetail=(id)=>{
-  const p=allProducts.find(x=>x.id==id);if(!p)return;
-  _dp=p;
-  const hasImg=p.imageUrl&&p.imageUrl.length>4;
-  const imgHtml=hasImg?`<img src="${p.imageUrl}" class="d-img" onerror="this.style.display='none'">`:`<div class="d-img-ph" style="background:${bgMap[p.category]||'#fdf6f0'}">${p.emoji}</div>`;
-  const tags=(p.desc||'').split('+').map(s=>s.trim()).filter(Boolean).map(s=>`<span class="d-tag">${s}</span>`).join('');
-  const detailsSec=p.details?`<div class="d-section"><h4>📋 تفاصيل</h4><p class="d-details">${p.details}</p></div>`:'';
-  const badgeCls=p.badge==='جديد'?'pb-new':p.badge==='خصم'?'pb-sale':'pb-best';
-  document.getElementById('detailContent').innerHTML=`
-    ${imgHtml}
-    <div class="d-body">
-      <div class="d-brand">Cosmo Brand</div>
-      <div class="d-name">${p.name}</div>
-      <div class="d-stars">★★★★★ <span style="color:var(--mid);font-size:.82rem">(${p.reviews||0} تقييم)</span></div>
-      <div class="d-price">${p.oldPrice?`<span class="d-old">${p.oldPrice} ج.م</span>`:''}${p.price} ج.م</div>
-      ${p.badge?`<div class="prod-badge ${badgeCls}" style="position:static;display:inline-block;margin-bottom:14px">${p.badge}</div>`:''}
-      <div class="d-section"><h4>📦 محتويات الباقة</h4><div class="d-tags">${tags||`<span class="d-tag">${p.desc}</span>`}</div></div>
-      ${detailsSec}
-      <div class="d-actions">
-        <button class="d-add" id="dAddBtn">🛒 أضيفي للسلة</button>
-        <button class="d-wa"  id="dWaBtn">💬 استفسري</button>
-      </div>
-    </div>`;
-  document.getElementById('dAddBtn').onclick=()=>{doAdd(p.name,p.price,p.emoji,p.imageUrl||'',p.id);closeDetail();};
-  document.getElementById('dWaBtn').onclick=()=>{window.open(`https://wa.me/${WA}?text=${encodeURIComponent('مرحباً! أنا مهتمة بـ *'+p.name+'* بسعر '+p.price+' ج.م 🌸\nممكن أعرف أكثر؟')}`,'_blank');};
-  document.getElementById('detailModal').classList.add('open');
-  document.body.style.overflow='hidden';
-};
-window.closeDetail=()=>{document.getElementById('detailModal').classList.remove('open');document.body.style.overflow='';_dp=null;};
-document.getElementById('detailModal').addEventListener('click',e=>{if(e.target===e.currentTarget)window.closeDetail();});
-
-/* ── Cart ── */
-window.doAdd=(name,price,emoji,imageUrl,id)=>{
-  const ex=cart.find(i=>i.name===name);
-  if(ex)ex.qty++;else cart.push({name,price,emoji,imageUrl,qty:1});
-  updateCart();showToast('تمت الإضافة للسلة ✅');
-  if(id){const b=document.getElementById(`ab${id}`);if(b){b.classList.add('added');b.textContent='✓ تمت';setTimeout(()=>{b.classList.remove('added');b.textContent='+ أضيفي';},2000);}}
-};
-window.changeQty=(i,d)=>{cart[i].qty+=d;if(cart[i].qty<=0)cart.splice(i,1);updateCart();};
-function updateCart(){
-  const cnt=cart.reduce((s,i)=>s+i.qty,0);
-  const tot=cart.reduce((s,i)=>s+i.price*i.qty,0);
-  document.getElementById('cartCount').textContent=cnt;
-  document.getElementById('cartTotal').textContent=tot.toLocaleString('ar-EG')+' ج.م';
-  const el=document.getElementById('cartItems'),ft=document.getElementById('cartFt');
-  if(!cart.length){el.innerHTML='<div class="empty-cart"><span class="ec-ic">🛒</span><p>سلتك فارغة</p></div>';ft.style.display='none';}
-  else{
-    ft.style.display='block';
-    el.innerHTML=cart.map((it,i)=>{
-      const thumb=it.imageUrl&&it.imageUrl.length>4?`<img src="${it.imageUrl}" class="ci-thumb" onerror="this.style.display='none'">`:`<span class="ci-emoji">${it.emoji}</span>`;
-      return `<div class="ci">${thumb}<div class="ci-info"><h4>${it.name}</h4><p>${(it.price*it.qty).toLocaleString('ar-EG')} ج.م</p></div><div class="ci-ctrl"><button class="q-btn" onclick="changeQty(${i},-1)">−</button><span>${it.qty}</span><button class="q-btn" onclick="changeQty(${i},1)">+</button></div></div>`;
-    }).join('');
-  }
-}
-window.toggleCart=()=>{document.getElementById('cartPanel').classList.toggle('open');document.getElementById('overlay').classList.toggle('open');};
-
-/* ── Place Order ── */
-window.placeOrder=async()=>{
-  const name=document.getElementById('cName').value.trim();
-  const phone=document.getElementById('cPhone').value.trim();
-  const address=document.getElementById('cAddress').value.trim();
-  const notes=document.getElementById('cNotes').value.trim();
-  if(!name||!phone||!address){showToast('⚠️ اكملي بيانات الطلب','⚠️');return;}
-  if(!cart.length){showToast('⚠️ السلة فارغة!','⚠️');return;}
-  const total=cart.reduce((s,i)=>s+i.price*i.qty,0);
-  const order={name,phone,address,notes,items:[...cart],total,date:new Date().toLocaleString('ar-EG'),status:'new'};
-  const r=push(ref(db,'orders'));
-  const orderId='ORD-'+r.key.slice(-5).toUpperCase();
-  order.id=orderId;await set(r,order);
-  const lines=cart.map(i=>`• ${i.emoji} ${i.name} × ${i.qty} = ${(i.price*i.qty).toLocaleString('ar-EG')} ج.م`).join('\n');
-  const msg=`🛍️ *طلب جديد - Cosmo Brand*\n\nرقم الطلب: *${orderId}*\n👤 ${name}\n📱 ${phone}\n📍 ${address}${notes?'\n📝 '+notes:''}\n\n📦 *المنتجات:*\n${lines}\n\n💰 *الإجمالي: ${total.toLocaleString('ar-EG')} ج.م*`;
-  window.open(`https://wa.me/${WA}?text=${encodeURIComponent(msg)}`,'_blank');
-  showToast(`🎉 تم إرسال طلبك! رقمه: ${orderId}`);
-  setTimeout(()=>{cart=[];updateCart();window.toggleCart();['cName','cPhone','cAddress','cNotes'].forEach(id=>document.getElementById(id).value='');},1800);
-};
-
-/* ── Track ── */
-window.openTrack=()=>document.getElementById('trackModal').classList.add('open');
-window.closeTrack=()=>{document.getElementById('trackModal').classList.remove('open');document.getElementById('trackRes').style.display='none';document.getElementById('trackInp').value='';};
-window.doTrack=async()=>{
-  const id=document.getElementById('trackInp').value.trim().toUpperCase();
-  const res=document.getElementById('trackRes');
-  res.style.display='block';res.className='track-res';res.textContent='🔍 جاري البحث…';
-  const snap=await get(ref(db,'orders'));
-  const o=snap.val()?Object.values(snap.val()).find(x=>x.id===id):null;
-  if(o){
-    const st={new:'🆕 تم استلام طلبك وجاري المراجعة',confirmed:'✅ تم تأكيد طلبك',shipped:'🚚 طلبك في الطريق إليك!',delivered:'🎉 تم توصيل طلبك!',cancelled:'❌ تم إلغاء الطلب'}[o.status]||'📦 جاري المتابعة';
-    res.className='track-res found';res.innerHTML=`<strong>${st}</strong><br>📅 ${o.date}<br>💰 ${o.total?.toLocaleString('ar-EG')} ج.م`;
-  }else{res.className='track-res notfound';res.innerHTML='❌ رقم الطلب مش موجود — تأكد من الرقم';}
-};
-
-/* ════════════════════════════════
-   AI BEAUTY ASSISTANT
-════════════════════════════════ */
-window.openAI=()=>{
-  document.getElementById('aiModal').classList.add('open');
-  document.body.style.overflow='hidden';
-  if(aiHistory.length===0){
-    addBotMsg('أهلاً! 🌸 أنا مستشارة الجمال الذكية من Cosmo Brand.\n\nاحكيلي عن مشكلتك أو ما تحتاجيه، وهرشحلك الباقة المناسبة من باقاتنا. 💕');
-  }
-};
-window.closeAI=()=>{document.getElementById('aiModal').classList.remove('open');document.body.style.overflow='';};
-document.getElementById('aiModal').addEventListener('click',e=>{if(e.target===e.currentTarget)window.closeAI();});
-
-window.sendAI=async()=>{
-  const inp=document.getElementById('aiInp');
-  const msg=inp.value.trim();
-  if(!msg)return;
-  inp.value='';
-  addUserMsg(msg);
-  aiHistory.push({role:'user',content:msg});
-  showTyping();
-  try{
-    // Build system prompt with current products
-    const prodsInfo=allProducts.length>0
-      ? allProducts.map(p=>`- ${p.name} (${p.category}) | ${p.price} ج.م | ${p.desc} | ${p.details||''}`).join('\n')
-      : 'لا توجد باقات متاحة حالياً.';
-    const systemPrompt=`أنت مستشارة جمال ذكية لمتجر Cosmo Brand المصري للعناية بالبشرة والشعر.
-مهمتك: تسمعي مشكلة العميلة وترشحيلها الباقة المناسبة من قائمة الباقات المتاحة.
-ردودك باللهجة المصرية الودودة، قصيرة ومفيدة.
-لما ترشحي باقة، اكتبي اسمها بالضبط كما هو في القائمة مسبوقاً بـ [RECOMMEND].
-مثال: [RECOMMEND]باقة التفتيح الذهبية
-
-الباقات المتاحة دلوقتي:
-${prodsInfo}
-
-لو مفيش باقة مناسبة، قولي للعميلة تتواصل معنا على الواتساب.`;
-
-    const resp=await fetch('https://api.anthropic.com/v1/messages',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        model:'claude-sonnet-4-20250514',
-        max_tokens:600,
-        system:systemPrompt,
-        messages:aiHistory
-      })
+    // جلب الباقات من Firebase وعرضها
+    db.collection("products").orderBy("createdAt", "desc").onSnapshot(snap => {
+        allProducts = [];
+        let html = '';
+        snap.forEach(doc => {
+            const p = doc.data();
+            const id = doc.id;
+            allProducts.push({ id, ...p });
+            
+            html += `
+                <div class="product-card" onclick="showDetails('${id}')">
+                    <img src="${p.imageUrl || 'https://via.placeholder.com/150'}" class="product-img">
+                    <div class="product-info">
+                        <div class="product-name">${p.name}</div>
+                        <div class="product-price">${p.price} ج.م</div>
+                    </div>
+                </div>`;
+        });
+        document.getElementById('productsGrid').innerHTML = html || 'لا توجد باقات متاحة حالياً.';
     });
-    const data=await resp.json();
-    const reply=data.content?.[0]?.text||'معلش، حصل خطأ. جربي تاني 🙏';
-    hideTyping();
-    aiHistory.push({role:'assistant',content:reply});
 
-    // Parse recommendations
-    const parts=reply.split('[RECOMMEND]');
-    let displayReply=parts[0].trim();
-    const recommended=parts.slice(1).map(s=>s.split('\n')[0].trim()).filter(Boolean);
+    // عرض تفاصيل الباقة
+    async function showDetails(id) {
+        const product = allProducts.find(p => p.id === id);
+        if (!product) return;
 
-    addBotMsg(displayReply, recommended);
-  }catch(e){
-    hideTyping();
-    addBotMsg('معلش، مش قادرة أتواصل دلوقتي 😔\nبس تقدري تتواصلي معنا على الواتساب وهنساعدك! 💕');
-  }
-};
+        document.getElementById('modalBody').innerHTML = `
+            <span class="close-btn" onclick="closeModal()">✕</span>
+            <img src="${product.imageUrl || 'https://via.placeholder.com/150'}" class="modal-img">
+            <h2 style="color:var(--deep); margin-bottom:10px;">${product.name}</h2>
+            <p style="color:#666; line-height:1.6;">${product.details || 'لا توجد تفاصيل متوفرة لهذه الباقة حالياً.'}</p>
+            <h3 style="margin-top:15px;">السعر: ${product.price} ج.م</h3>
+            <button class="order-btn" onclick="orderNow('${product.name}', ${product.price})">طلب عبر واتساب</button>
+        `;
+        document.getElementById('productModal').style.display = 'flex';
+    }
 
-document.getElementById('aiInp').addEventListener('keydown',e=>{if(e.key==='Enter')window.sendAI();});
+    function closeModal() { document.getElementById('productModal').style.display = 'none'; }
 
-function addBotMsg(text, recommendations=[]){
-  const msgs=document.getElementById('aiMsgs');
-  const div=document.createElement('div');
-  div.className='ai-msg bot';
-  div.innerHTML=text.replace(/\n/g,'<br>');
-  if(recommendations.length>0){
-    recommendations.forEach(name=>{
-      const p=allProducts.find(x=>x.name===name);
-      if(p){
-        const card=document.createElement('div');
-        card.className='ai-prod-card';
-        card.innerHTML=`<h5>${p.emoji} ${p.name}</h5><p>${p.desc}</p><div class="apc-foot"><span class="apc-price">${p.price} ج.م</span><button class="apc-add" onclick="doAdd('${p.name.replace(/'/g,"\\'")}',${p.price},'${p.emoji}','${p.imageUrl||''}',${p.id});showToast('تمت الإضافة للسلة ✅')">+ أضيفي للسلة</button></div>`;
-        card.onclick=(e)=>{ if(e.target.classList.contains('apc-add'))return; openDetail(p.id); closeAI(); };
-        div.appendChild(card);
-      }
-    });
-  }
-  msgs.appendChild(div);
-  msgs.scrollTop=msgs.scrollHeight;
-}
-function addUserMsg(text){
-  const msgs=document.getElementById('aiMsgs');
-  const div=document.createElement('div');
-  div.className='ai-msg user';
-  div.textContent=text;
-  msgs.appendChild(div);
-  msgs.scrollTop=msgs.scrollHeight;
-}
-let typingEl=null;
-function showTyping(){
-  typingEl=document.createElement('div');
-  typingEl.className='ai-typing';
-  typingEl.innerHTML='<span></span><span></span><span></span>';
-  document.getElementById('aiMsgs').appendChild(typingEl);
-  document.getElementById('aiMsgs').scrollTop=99999;
-}
-function hideTyping(){if(typingEl){typingEl.remove();typingEl=null;}}
+    // الطلب عبر واتساب
+    function orderNow(name, price) {
+        const phone = "201125696178"; // رقمك
+        const text = encodeURIComponent(`أهلاً Cosmo Brand، أرغب في طلب: ${name}\nالسعر: ${price} ج.م`);
+        window.open(`https://wa.me/${phone}?text=${text}`);
+    }
 
-/* ── Misc ── */
-function waContact(){window.open(`https://wa.me/${WA}?text=${encodeURIComponent('مرحباً! أريد الاستفسار عن Cosmo Brand 🌸')}`,'_blank');}
-window.waContact=waContact;
-function showToast(msg,ic='✅'){const t=document.getElementById('toast');document.getElementById('tmsg').textContent=msg;document.getElementById('tic').textContent=ic;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3200);}
+    // منطق الـ AI المعتمد على التفاصيل
+    function toggleAIChat() {
+        const win = document.getElementById('aiChat');
+        win.style.display = (win.style.display === 'flex') ? 'none' : 'flex';
+    }
 
-function defaults(){
-  // لا توجد باقات افتراضية — أضف باقاتك من لوحة التحكم
-  return [];
-}
+    function processAI() {
+        const input = document.getElementById('aiInput').value.trim().toLowerCase();
+        const body = document.getElementById('aiBody');
+        if (!input) return;
+
+        body.innerHTML += `<div class="ai-msg user-msg">${input}</div>`;
+        document.getElementById('aiInput').value = '';
+
+        // البحث في الباقات بناءً على الكلمات المفتاحية في الاسم أو التفاصيل
+        const match = allProducts.find(p => 
+            (p.name && p.name.toLowerCase().includes(input)) || 
+            (p.details && p.details.toLowerCase().includes(input))
+        );
+
+        setTimeout(() => {
+            if (match) {
+                body.innerHTML += `
+                    <div class="ai-msg bot-msg">
+                        بناءً على مشكلتك، أرشح لكِ <b>${match.name}</b>. 
+                        وهي متخصصة في ذلك. سعرها ${match.price} ج.م.
+                        <br><button onclick="showDetails('${match.id}')" style="margin-top:10px; padding:5px 10px; background:var(--deep); color:white; border:none; border-radius:5px; cursor:pointer;">رؤية المكونات</button>
+                    </div>`;
+            } else {
+                body.innerHTML += `<div class="ai-msg bot-msg">لم أجد باقة مخصصة لهذا الوصف حالياً، لكن يمكنكِ تصفح باقاتنا المتنوعة أو وصفي المشكلة بكلمات أخرى.</div>`;
+            }
+            body.scrollTop = body.scrollHeight;
+        }, 700);
+    }
 </script>
 </body>
 </html>
