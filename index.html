@@ -1,89 +1,75 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cosmo Brand | متجر الجمال</title>
+    <title>Cosmo Brand | عالم الجمال</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root { --deep:#8b3a5a; --gold:#c9a84c; --cream:#fdf6f0; }
-        body { font-family: 'Tajawal', sans-serif; background: var(--cream); margin: 0; padding: 0; }
+        :root { --main: #8b3a5a; --gold: #c9a84c; --bg: #fdf6f0; }
+        body { font-family: 'Tajawal', sans-serif; background: var(--bg); margin: 0; padding-bottom: 80px; }
+        .nav { background: white; padding: 15px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); position: sticky; top:0; z-index:100; }
         
-        /* الهيدر */
-        nav { background: white; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; position: fixed; top: 0; width: 100%; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.1); box-sizing: border-box; }
-        .logo { font-weight: bold; color: var(--deep); font-size: 1.5rem; }
-
-        .container { padding: 100px 5% 40px; }
+        /* الأقسام */
+        .section-title { padding: 20px 5% 10px; font-weight: bold; color: var(--main); font-size: 1.2rem; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 0 5%; }
+        .card { background: white; border-radius: 20px; padding: 10px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.03); }
+        .card img { width: 100%; height: 140px; object-fit: cover; border-radius: 15px; }
         
-        /* شبكة المنتجات */
-        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 20px; }
-        .product-card { background: white; border-radius: 20px; overflow: hidden; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: 0.3s; cursor: pointer; border: 1px solid #eee; }
-        .product-card:hover { transform: translateY(-5px); }
-        .product-img { width: 100%; height: 180px; object-fit: cover; background: #f9f9f9; }
-        .product-info { padding: 15px; }
-        .product-name { font-weight: bold; font-size: 1rem; margin-bottom: 8px; color: #333; }
-        .product-price { color: var(--deep); font-weight: bold; font-size: 1.1rem; }
+        /* المساعد الذكي */
+        .ai-btn { position: fixed; bottom: 20px; left: 20px; background: linear-gradient(135deg, var(--main), var(--gold)); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; z-index: 500; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        
+        /* الاختبار */
+        .quiz-box { background: white; margin: 15px 5%; padding: 20px; border-radius: 20px; border: 2px dashed var(--gold); text-align: center; }
+        
+        /* مودال */
+        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.8); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
+        .modal-content { background: white; width: 100%; max-width: 500px; border-radius: 25px; padding: 20px; max-height: 90vh; overflow-y: auto; }
+        
+        /* معرض قبل وبعد */
+        .gallery-scroll { display: flex; overflow-x: auto; gap: 15px; padding: 10px 5%; }
+        .g-card { min-width: 250px; background: white; border-radius: 15px; padding: 10px; }
+        .g-imgs { display: flex; gap: 5px; }
+        .g-imgs img { width: 50%; height: 120px; border-radius: 8px; object-fit: cover; }
 
-        /* نافذة التفاصيل (Modal) */
-        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 1000; display: none; align-items: center; justify-content: center; padding: 20px; }
-        .modal-content { background: white; border-radius: 25px; max-width: 500px; width: 100%; padding: 25px; position: relative; max-height: 90vh; overflow-y: auto; }
-        .modal-img { width: 100%; border-radius: 15px; margin-bottom: 20px; height: 250px; object-fit: cover; }
-        .close-btn { position: absolute; top: 15px; left: 15px; font-size: 1.5rem; cursor: pointer; color: #999; }
-        .order-btn { background: var(--deep); color: white; border: none; padding: 15px; border-radius: 50px; width: 100%; font-size: 1.1rem; font-weight: bold; cursor: pointer; margin-top: 20px; }
-
-        /* أيقونة السلة العائمة */
-        .cart-float { position: fixed; bottom: 25px; right: 25px; background: var(--deep); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; cursor: pointer; z-index: 150; box-shadow: 0 4px 20px rgba(139, 58, 90, 0.4); }
-
-        /* --- استايل الـ AI --- */
-        .ai-icon { position: fixed; bottom: 100px; right: 25px; background: linear-gradient(135deg, #8b3a5a, #c9a84c); color: white; width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; cursor: pointer; z-index: 200; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
-        .ai-window { position: fixed; bottom: 170px; right: 25px; width: 320px; background: white; border-radius: 20px; display: none; flex-direction: column; box-shadow: 0 10px 40px rgba(0,0,0,0.2); z-index: 200; overflow: hidden; border: 1px solid #f0f0f0; }
-        .ai-header { background: var(--deep); color: white; padding: 15px; display: flex; justify-content: space-between; align-items: center; font-weight: bold; }
-        .ai-body { padding: 15px; max-height: 350px; overflow-y: auto; font-size: 0.95rem; line-height: 1.6; background: #fafafa; }
-        .ai-footer { display: flex; padding: 10px; background: white; border-top: 1px solid #eee; }
-        .ai-footer input { flex: 1; border: 1px solid #eee; padding: 10px; border-radius: 10px; outline: none; margin-left: 8px; }
-        .ai-footer button { background: var(--deep); color: white; border: none; padding: 10px 15px; border-radius: 10px; cursor: pointer; }
-        .ai-msg { margin-bottom: 12px; padding: 10px; border-radius: 12px; max-width: 85%; }
-        .user-msg { background: #f5e6ea; align-self: flex-start; margin-right: auto; color: #8b3a5a; }
-        .bot-msg { background: white; border: 1px solid #eee; align-self: flex-end; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
+        input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #eee; border-radius: 10px; box-sizing: border-box; }
+        .order-btn { background: var(--main); color: white; width: 100%; padding: 15px; border: none; border-radius: 15px; font-weight: bold; cursor: pointer; }
+        .expert-tip { background: #fff9e6; border-right: 4px solid var(--gold); padding: 10px; margin: 15px 0; font-size: 0.9rem; color: #7a5d00; border-radius: 5px; }
     </style>
 </head>
 <body>
 
-<nav>
-    <div class="logo">Cosmo Brand</div>
-</nav>
+<div class="nav"><h2>Cosmo Brand ✨</h2></div>
 
-<div class="container">
-    <div class="products-grid" id="productsGrid">جاري جلب الباقات...</div>
+<div class="quiz-box">
+    <h4>💡 محتارة تختاري إيه؟</h4>
+    <p style="font-size: 0.8rem;">جاوبي على سؤالين وهنرشحلك الباقة المثالية</p>
+    <button onclick="startQuiz()" style="background:var(--gold); color:white; border:none; padding:8px 20px; border-radius:20px; cursor:pointer;">ابدئي الاختبار</button>
 </div>
 
-<div id="productModal" class="modal">
-    <div class="modal-content" id="modalBody"></div>
+<div class="section-title">باقاتنا المميزة</div>
+<div class="grid" id="pGrid">جاري التحميل...</div>
+
+<div class="section-title">نتائج حقيقية (قبل وبعد)</div>
+<div class="gallery-scroll" id="gGrid"></div>
+
+<div class="section-title">تتبع أوردرك ونقاطك</div>
+<div style="padding: 0 5%;">
+    <input type="text" id="trackIn" placeholder="أدخل رقم موبايلك">
+    <button onclick="track()" style="width:100%; padding:10px; background:white; border:1px solid var(--main); color:var(--main); border-radius:10px;">استعلام</button>
+    <div id="trackOut" style="margin-top:10px; font-size:0.9rem; text-align:center;"></div>
 </div>
 
-<div class="ai-icon" onclick="toggleAIChat()">✨</div>
+<div class="ai-btn" onclick="toggleAI()">🤖</div>
 
-<div id="aiChat" class="ai-window">
-    <div class="ai-header">
-        <span>مساعد Cosmo الذكي</span>
-        <span onclick="toggleAIChat()" style="cursor:pointer">✕</span>
-    </div>
-    <div id="aiBody" class="ai-body">
-        <div class="ai-msg bot-msg">أهلاً بكِ! اذكر لي مشكلتكِ (مثل: جفاف، تساقط، قشرة) وسأرشح لكِ الباقة المناسبة فوراً.</div>
-    </div>
-    <div class="ai-footer">
-        <input type="text" id="aiInput" placeholder="اكتبي مشكلتك هنا..." onkeypress="if(event.key==='Enter') processAI()">
-        <button onclick="processAI()">إرسال</button>
-    </div>
+<div id="modal" class="modal">
+    <div class="modal-content" id="mBody"></div>
 </div>
-
-<div class="cart-float">🛒</div>
 
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-
 <script>
-    // الإعدادات الخاصة بك
     const firebaseConfig = {
         apiKey: "AIzaSyBDUzmVCOB9HK_g5iB4wm_UAjw0jAvhr8k",
         authDomain: "cosmo-brand.firebaseapp.com",
@@ -94,89 +80,91 @@
     };
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
+    let allP = []; let config = {wa:"201125696178"};
 
-    let allProducts = [];
+    db.collection("settings").doc("main").onSnapshot(d => { if(d.exists) config = d.data(); });
 
-    // جلب الباقات من Firebase وعرضها
-    db.collection("products").orderBy("createdAt", "desc").onSnapshot(snap => {
-        allProducts = [];
-        let html = '';
-        snap.forEach(doc => {
-            const p = doc.data();
-            const id = doc.id;
-            allProducts.push({ id, ...p });
-            
-            html += `
-                <div class="product-card" onclick="showDetails('${id}')">
-                    <img src="${p.imageUrl || 'https://via.placeholder.com/150'}" class="product-img">
-                    <div class="product-info">
-                        <div class="product-name">${p.name}</div>
-                        <div class="product-price">${p.price} ج.م</div>
-                    </div>
-                </div>`;
+    // تحميل المنتجات
+    db.collection("products").onSnapshot(snap => {
+        let h = ''; allP = [];
+        snap.forEach(d => {
+            const p = d.data(); allP.push({id: d.id, ...p});
+            h += `<div class="card" onclick="openP('${d.id}')">
+                <img src="${p.imageUrl}">
+                <h4>${p.name}</h4>
+                <p style="color:var(--main); font-weight:bold;">${p.price} ج.م</p>
+                <small style="color:green;">+ ${p.points || 0} نقطة</small>
+            </div>`;
         });
-        document.getElementById('productsGrid').innerHTML = html || 'لا توجد باقات متاحة حالياً.';
+        document.getElementById('pGrid').innerHTML = h;
     });
 
-    // عرض تفاصيل الباقة
-    async function showDetails(id) {
-        const product = allProducts.find(p => p.id === id);
-        if (!product) return;
+    // تحميل المعرض
+    db.collection("gallery").onSnapshot(snap => {
+        let h = '';
+        snap.forEach(d => {
+            const g = d.data();
+            h += `<div class="g-card">
+                <p style="font-weight:bold; font-size:0.8rem; margin-bottom:5px;">${g.title}</p>
+                <div class="g-imgs"><img src="${g.before}"><img src="${g.after}"></div>
+            </div>`;
+        });
+        document.getElementById('gGrid').innerHTML = h;
+    });
 
-        document.getElementById('modalBody').innerHTML = `
-            <span class="close-btn" onclick="closeModal()">✕</span>
-            <img src="${product.imageUrl || 'https://via.placeholder.com/150'}" class="modal-img">
-            <h2 style="color:var(--deep); margin-bottom:10px;">${product.name}</h2>
-            <p style="color:#666; line-height:1.6;">${product.details || 'لا توجد تفاصيل متوفرة لهذه الباقة حالياً.'}</p>
-            <h3 style="margin-top:15px;">السعر: ${product.price} ج.م</h3>
-            <button class="order-btn" onclick="orderNow('${product.name}', ${product.price})">طلب عبر واتساب</button>
+    function openP(id) {
+        const p = allP.find(x => x.id === id);
+        document.getElementById('mBody').innerHTML = `
+            <img src="${p.imageUrl}" style="width:100%; border-radius:15px; height:200px; object-fit:cover;">
+            <h2>${p.name}</h2>
+            <div class="expert-tip"><b>💡 نصيحة الخبير:</b><br>${p.expertTip || 'يُفضل استخدامه بانتظام لنتائج مثالية.'}</div>
+            <p><b>📦 المحتويات:</b> ${p.content}</p>
+            <input id="cName" placeholder="الاسم بالكامل">
+            <input id="cPhone" placeholder="رقم الموبايل">
+            <button class="order-btn" onclick="order('${p.id}')">تأكيد الطلب (+${p.points} نقطة)</button>
+            <button onclick="closeM()" style="width:100%; border:none; background:none; color:gray; margin-top:10px;">إغلاق</button>
         `;
-        document.getElementById('productModal').style.display = 'flex';
+        document.getElementById('modal').style.display = 'flex';
     }
 
-    function closeModal() { document.getElementById('productModal').style.display = 'none'; }
+    async function order(id) {
+        const p = allP.find(x => x.id === id);
+        const name = document.getElementById('cName').value;
+        const phone = document.getElementById('cPhone').value;
+        if(!name || !phone) return alert("يرجى ملء البيانات");
 
-    // الطلب عبر واتساب
-    function orderNow(name, price) {
-        const phone = "201125696178"; // رقمك
-        const text = encodeURIComponent(`أهلاً Cosmo Brand، أرغب في طلب: ${name}\nالسعر: ${price} ج.م`);
-        window.open(`https://wa.me/${phone}?text=${text}`);
+        await db.collection("orders").add({
+            clientName: name, clientPhone: phone, productName: p.name,
+            pointsEarned: p.points, status: "قيد الانتظار", date: new Date()
+        });
+
+        const msg = encodeURIComponent(`طلب جديد من Cosmo:\nالعميل: ${name}\nالباقة: ${p.name}\nالسعر: ${p.price}`);
+        window.open(`https://wa.me/${config.wa}?text=${msg}`);
     }
 
-    // منطق الـ AI المعتمد على التفاصيل
-    function toggleAIChat() {
-        const win = document.getElementById('aiChat');
-        win.style.display = (win.style.display === 'flex') ? 'none' : 'flex';
+    async function track() {
+        const phone = document.getElementById('trackIn').value;
+        const snap = await db.collection("orders").where("clientPhone", "==", phone).get();
+        if(snap.empty) return document.getElementById('trackOut').innerHTML = "لا يوجد طلبات لهذا الرقم";
+        
+        let totalPoints = 0; let status = '';
+        snap.forEach(d => { 
+            totalPoints += Number(d.data().pointsEarned || 0);
+            status = d.data().status;
+        });
+        document.getElementById('trackOut').innerHTML = `حالة آخر أوردر: <b>${status}</b> <br> إجمالي نقاطك: <b style="color:var(--main);">${totalPoints} نقطة</b>`;
     }
 
-    function processAI() {
-        const input = document.getElementById('aiInput').value.trim().toLowerCase();
-        const body = document.getElementById('aiBody');
-        if (!input) return;
-
-        body.innerHTML += `<div class="ai-msg user-msg">${input}</div>`;
-        document.getElementById('aiInput').value = '';
-
-        // البحث في الباقات بناءً على الكلمات المفتاحية في الاسم أو التفاصيل
-        const match = allProducts.find(p => 
-            (p.name && p.name.toLowerCase().includes(input)) || 
-            (p.details && p.details.toLowerCase().includes(input))
-        );
-
-        setTimeout(() => {
-            if (match) {
-                body.innerHTML += `
-                    <div class="ai-msg bot-msg">
-                        بناءً على مشكلتك، أرشح لكِ <b>${match.name}</b>. 
-                        وهي متخصصة في ذلك. سعرها ${match.price} ج.م.
-                        <br><button onclick="showDetails('${match.id}')" style="margin-top:10px; padding:5px 10px; background:var(--deep); color:white; border:none; border-radius:5px; cursor:pointer;">رؤية المكونات</button>
-                    </div>`;
-            } else {
-                body.innerHTML += `<div class="ai-msg bot-msg">لم أجد باقة مخصصة لهذا الوصف حالياً، لكن يمكنكِ تصفح باقاتنا المتنوعة أو وصفي المشكلة بكلمات أخرى.</div>`;
-            }
-            body.scrollTop = body.scrollHeight;
-        }, 700);
+    function startQuiz() {
+        const cat = confirm("هل مشكلتك الأساسية في الشعر؟ (اضغط موافق للشعر، إلغاء للبشرة)");
+        const type = cat ? "hair" : "skin";
+        const match = allP.find(p => p.category === type);
+        if(match) openP(match.id);
+        else alert("جاري تجهيز باقات تناسب هذا الاختيار، تصفحي المتاح حالياً!");
     }
+
+    function toggleAI() { alert("مساعد Cosmo الذكي: يمكنني مساعدتك في اختيار الباقة بناءً على وصف مشكلتك، فقط اسأليني!"); }
+    function closeM() { document.getElementById('modal').style.display = 'none'; }
 </script>
 </body>
 </html>
