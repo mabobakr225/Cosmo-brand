@@ -172,7 +172,43 @@ footer{background:var(--dark);color:rgba(255,255,255,.7);padding:50px 5% 24px;ma
 .toast{position:fixed;bottom:24px;right:24px;background:var(--deep);color:#fff;padding:11px 18px;border-radius:10px;font-size:.88rem;z-index:600;transform:translateY(100px);opacity:0;transition:all .4s;display:flex;align-items:center;gap:7px;}
 .toast.show{transform:translateY(0);opacity:1;}
 
-@keyframes blobFloat{0%,100%{border-radius:60% 40% 70% 30%/50% 60% 40% 50%;transform:translateY(0);}50%{border-radius:40% 60% 50% 70%/60% 40% 60% 40%;transform:translateY(-12px);}}
+/* ── AI ASSISTANT ── */
+.ai-float{position:fixed;bottom:24px;right:24px;z-index:150;width:58px;height:58px;background:linear-gradient(135deg,var(--rose),var(--deep));border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 5px 18px rgba(139,58,90,.45);transition:transform .3s;border:none;}
+.ai-float:hover{transform:scale(1.1);}
+.ai-float svg{width:28px;height:28px;fill:white;}
+.ai-modal{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:400;display:none;align-items:flex-end;justify-content:center;padding:0;}
+.ai-modal.open{display:flex;}
+.ai-box{background:#fff;border-radius:24px 24px 0 0;width:100%;max-width:520px;height:85vh;display:flex;flex-direction:column;animation:slideUp .35s ease both;}
+@keyframes slideUp{from{transform:translateY(100%);}to{transform:translateY(0);}}
+.ai-hd{padding:16px 20px 12px;border-bottom:1px solid #f0e8ec;display:flex;align-items:center;gap:12px;flex-shrink:0;}
+.ai-hd-icon{width:42px;height:42px;background:linear-gradient(135deg,var(--rose),var(--deep));border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.ai-hd-icon svg{width:22px;height:22px;fill:white;}
+.ai-hd-info h4{font-size:1rem;font-weight:700;color:var(--deep);margin-bottom:1px;}
+.ai-hd-info p{font-size:.75rem;color:var(--mid);}
+.ai-close{background:none;border:none;font-size:1.3rem;cursor:pointer;color:var(--mid);margin-right:auto;}
+.ai-msgs{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px;}
+.ai-msg{max-width:82%;padding:10px 14px;border-radius:16px;font-size:.88rem;line-height:1.6;}
+.ai-msg.bot{background:var(--soft);color:var(--text);align-self:flex-start;border-bottom-right-radius:4px;}
+.ai-msg.user{background:linear-gradient(135deg,var(--rose),var(--deep));color:#fff;align-self:flex-end;border-bottom-left-radius:4px;}
+.ai-msg.bot .ai-prod-card{background:#fff;border-radius:12px;padding:10px 12px;margin-top:8px;border:1px solid #e8d8e0;cursor:pointer;transition:box-shadow .3s;}
+.ai-msg.bot .ai-prod-card:hover{box-shadow:0 4px 14px rgba(139,58,90,.12);}
+.ai-msg.bot .ai-prod-card h5{font-size:.84rem;font-weight:700;color:var(--deep);margin-bottom:2px;}
+.ai-msg.bot .ai-prod-card p{font-size:.76rem;color:var(--mid);}
+.ai-msg.bot .ai-prod-card .apc-foot{display:flex;align-items:center;justify-content:space-between;margin-top:7px;}
+.ai-msg.bot .ai-prod-card .apc-price{font-size:.88rem;font-weight:700;color:var(--rose);}
+.ai-msg.bot .ai-prod-card .apc-add{background:var(--deep);color:#fff;border:none;border-radius:50px;padding:5px 12px;font-family:'Tajawal',sans-serif;font-size:.75rem;cursor:pointer;}
+.ai-typing{display:flex;gap:5px;align-items:center;padding:10px 14px;background:var(--soft);border-radius:16px;align-self:flex-start;border-bottom-right-radius:4px;}
+.ai-typing span{width:7px;height:7px;background:var(--mid);border-radius:50%;animation:dot 1.2s infinite;}
+.ai-typing span:nth-child(2){animation-delay:.2s;}
+.ai-typing span:nth-child(3){animation-delay:.4s;}
+@keyframes dot{0%,60%,100%{transform:translateY(0);}30%{transform:translateY(-6px);}}
+.ai-inp-row{padding:12px 14px;border-top:1px solid #f0e8ec;display:flex;gap:9px;flex-shrink:0;}
+.ai-inp{flex:1;border:1.5px solid #e0d0d8;border-radius:50px;padding:10px 16px;font-family:'Tajawal',sans-serif;font-size:.88rem;outline:none;transition:border .3s;}
+.ai-inp:focus{border-color:var(--rose);}
+.ai-send{background:linear-gradient(135deg,var(--rose),var(--deep));color:#fff;border:none;border-radius:50%;width:42px;height:42px;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:opacity .3s;}
+.ai-send:hover{opacity:.9;}
+@media(max-width:768px){.ai-float{bottom:86px;}}
+
 @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-12px);}}
 @keyframes pulse{0%,100%{box-shadow:0 5px 16px rgba(37,211,102,.5);}50%{box-shadow:0 5px 28px rgba(37,211,102,.8);}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
@@ -252,43 +288,29 @@ footer{background:var(--dark);color:rgba(255,255,255,.7);padding:50px 5% 24px;ma
   <div class="fb2"><p>© 2026 Cosmo Brand. جميع الحقوق محفوظة.</p><div class="socials"><a href="#" class="sl">📸</a><a href="#" class="sl">▶️</a><a href="#" class="sl">💬</a></div></div>
 </footer>
 
-<div class="wa-float" onclick="waContact()">💬</div>
+<!-- AI ASSISTANT BUTTON -->
+<button class="ai-float" onclick="openAI()" title="مستشارة الجمال الذكية">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 0 2h-1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1 0-2h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2zm-3 9a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm6 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/></svg>
+</button>
 
-<!-- CART -->
-<div class="overlay" id="overlay" onclick="toggleCart()"></div>
-<div class="cart-panel" id="cartPanel">
-  <div class="cart-hd"><h3>🛒 سلة المشتريات</h3><button class="x-btn" onclick="toggleCart()">✕</button></div>
-  <div id="cartItems"><div class="empty-cart"><span class="ec-ic">🛒</span><p>سلتك فارغة</p></div></div>
-  <div id="cartFt" style="display:none">
-    <div class="cart-tot"><span>الإجمالي:</span><span id="cartTotal">0 ج.م</span></div>
-    <div class="oform">
-      <h4>📦 بيانات الطلب</h4>
-      <input class="oinput" id="cName" placeholder="اسمك الكامل">
-      <input class="oinput" id="cPhone" placeholder="رقم موبايلك" type="tel">
-      <input class="oinput" id="cAddress" placeholder="عنوان التوصيل بالتفصيل">
-      <textarea class="oinput" id="cNotes" placeholder="ملاحظات إضافية (اختياري)" rows="2" style="resize:none"></textarea>
-      <button class="wa-btn" onclick="placeOrder()">💬 أرسل الطلب على واتساب</button>
+<!-- AI ASSISTANT MODAL -->
+<div class="ai-modal" id="aiModal">
+  <div class="ai-box">
+    <div class="ai-hd">
+      <div class="ai-hd-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 0 2h-1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1 0-2h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2zm-3 9a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm6 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/></svg>
+      </div>
+      <div class="ai-hd-info">
+        <h4>✨ مستشارة الجمال الذكية</h4>
+        <p>اسأليني عن مشكلتك وهرشحلك الباقة المناسبة</p>
+      </div>
+      <button class="ai-close" onclick="closeAI()">✕</button>
     </div>
-  </div>
-</div>
-
-<!-- DETAIL MODAL -->
-<div class="detail-modal" id="detailModal">
-  <div class="detail-box">
-    <button class="d-close" onclick="closeDetail()">✕</button>
-    <div id="detailContent"></div>
-  </div>
-</div>
-
-<!-- TRACK MODAL -->
-<div class="modal-bg" id="trackModal">
-  <div class="modal-box">
-    <h3>📦 تتبع طلبك</h3>
-    <p>أدخل رقم الطلب اللي وصلك على الواتساب</p>
-    <input class="track-inp" id="trackInp" placeholder="مثال: ORD-ABC12">
-    <button class="btn-primary" style="width:100%" onclick="doTrack()">بحث 🔍</button>
-    <div class="track-res" id="trackRes"></div>
-    <button onclick="closeTrack()" style="margin-top:14px;background:none;border:none;cursor:pointer;color:var(--mid);font-family:'Tajawal',sans-serif;font-size:.9rem;">إغلاق ✕</button>
+    <div class="ai-msgs" id="aiMsgs"></div>
+    <div class="ai-inp-row">
+      <input class="ai-inp" id="aiInp" placeholder="اكتبي مشكلتك هنا…" onkeydown="if(event.key==='Enter')sendAI()">
+      <button class="ai-send" onclick="sendAI()">➤</button>
+    </div>
   </div>
 </div>
 
@@ -298,43 +320,35 @@ footer{background:var(--dark);color:rgba(255,255,255,.7);padding:50px 5% 24px;ma
 import { initializeApp }                              from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getDatabase, ref, onValue, push, set, get } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
-const FB = {
-  apiKey:"AIzaSyBDUzmVCOB9HK_g5iB4wm_UAjw0jAvhr8k",
-  authDomain:"cosmo-brand.firebaseapp.com",
-  databaseURL:"https://cosmo-brand-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId:"cosmo-brand",
-  storageBucket:"cosmo-brand.firebasestorage.app",
-  messagingSenderId:"12821155095",
-  appId:"1:12821155095:web:b341ec9b1c34b9659a7b52"
-};
-const db = getDatabase(initializeApp(FB));
+const FB={apiKey:"AIzaSyBDUzmVCOB9HK_g5iB4wm_UAjw0jAvhr8k",authDomain:"cosmo-brand.firebaseapp.com",databaseURL:"https://cosmo-brand-default-rtdb.europe-west1.firebasedatabase.app",projectId:"cosmo-brand",storageBucket:"cosmo-brand.firebasestorage.app",messagingSenderId:"12821155095",appId:"1:12821155095:web:b341ec9b1c34b9659a7b52"};
+const db=getDatabase(initializeApp(FB));
 
 const bgMap={acne:'linear-gradient(135deg,#e8f5e9,#f1f8e9)',brightening:'linear-gradient(135deg,#fff9e6,#fff3cd)',moisturizing:'linear-gradient(135deg,#e3f2fd,#e8eaf6)',hairloss:'linear-gradient(135deg,#f3e5f5,#fce4ec)',dandruff:'linear-gradient(135deg,#e0f7fa,#e8f5e9)',haircare:'linear-gradient(135deg,#fce4ec,#f8bbd0)',makeup:'linear-gradient(135deg,#fdf6f0,#fff)',perfume:'linear-gradient(135deg,#fdf6f0,#fce4ec)'};
 
-let cart=[], activeCat='all', allProducts=[], WA='201125696178';
+let cart=[],activeCat='all',allProducts=[],WA='201125696178';
+let aiHistory=[];
 
 /* ── Settings ── */
-onValue(ref(db,'settings'), snap=>{
+onValue(ref(db,'settings'),snap=>{
   const s=snap.val()||{};
-  if(s.whatsapp){ WA=s.whatsapp; document.getElementById('waLink').href=`https://wa.me/${WA}`; }
+  if(s.whatsapp){WA=s.whatsapp;document.getElementById('waLink').href=`https://wa.me/${WA}`;}
 });
 
-/* ── Products real-time ── */
-onValue(ref(db,'products'), snap=>{
+/* ── Products ── */
+onValue(ref(db,'products'),snap=>{
   const data=snap.val();
-  if(data){ allProducts=Object.values(data); }
-  else{ allProducts=defaults(); set(ref(db,'products'),Object.fromEntries(allProducts.map(p=>[p.id,p]))); }
+  if(data){allProducts=Object.values(data);}
+  else{allProducts=defaults();if(defaults().length)set(ref(db,'products'),Object.fromEntries(allProducts.map(p=>[p.id,p])));}
   renderGrid(activeCat==='all'?allProducts:allProducts.filter(p=>p.category===activeCat));
 });
 
-/* ── Render Grid ── */
+/* ── Grid ── */
 function renderGrid(list){
   const g=document.getElementById('grid');
-  if(!list.length){g.innerHTML='<p style="text-align:center;color:var(--mid);padding:36px;grid-column:1/-1">لا توجد منتجات في هذه الفئة</p>';return;}
+  if(!list.length){g.innerHTML='<div style="text-align:center;color:var(--mid);padding:60px 20px;grid-column:1/-1"><div style="font-size:4rem;margin-bottom:16px">🌸</div><p style="font-size:1rem;font-weight:600;color:var(--deep)">قريباً — جاري إضافة الباقات</p><p style="font-size:.85rem;margin-top:6px">تابعونا للاطلاع على أحدث العروض</p></div>';return;}
   g.innerHTML=list.map(p=>{
     const hasImg=p.imageUrl&&p.imageUrl.length>4;
-    const imgPart=hasImg
-      ?`<img src="${p.imageUrl}" style="width:100%;height:100%;object-fit:cover" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`:'';
+    const imgPart=hasImg?`<img src="${p.imageUrl}" style="width:100%;height:100%;object-fit:cover" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`:'' ;
     const emojiStyle=hasImg?'display:none;':'';
     const badgeCls=p.badge==='جديد'?'pb-new':p.badge==='خصم'?'pb-sale':'pb-best';
     return `
@@ -357,21 +371,15 @@ function renderGrid(list){
     </div>`;
   }).join('');
 }
-
-window.filterCat=(cat,el)=>{
-  activeCat=cat;
-  document.querySelectorAll('.pill').forEach(p=>p.classList.remove('active'));
-  el.classList.add('active');
-  renderGrid(cat==='all'?allProducts:allProducts.filter(p=>p.category===cat));
-};
+window.filterCat=(cat,el)=>{activeCat=cat;document.querySelectorAll('.pill').forEach(p=>p.classList.remove('active'));el.classList.add('active');renderGrid(cat==='all'?allProducts:allProducts.filter(p=>p.category===cat));};
 
 /* ── Detail Modal ── */
+let _dp=null;
 window.openDetail=(id)=>{
-  const p=allProducts.find(x=>x.id==id); if(!p) return;
+  const p=allProducts.find(x=>x.id==id);if(!p)return;
+  _dp=p;
   const hasImg=p.imageUrl&&p.imageUrl.length>4;
-  const imgHtml=hasImg
-    ?`<img src="${p.imageUrl}" class="d-img" onerror="this.style.display='none'">`
-    :`<div class="d-img-ph" style="background:${bgMap[p.category]||'#fdf6f0'}">${p.emoji}</div>`;
+  const imgHtml=hasImg?`<img src="${p.imageUrl}" class="d-img" onerror="this.style.display='none'">`:`<div class="d-img-ph" style="background:${bgMap[p.category]||'#fdf6f0'}">${p.emoji}</div>`;
   const tags=(p.desc||'').split('+').map(s=>s.trim()).filter(Boolean).map(s=>`<span class="d-tag">${s}</span>`).join('');
   const detailsSec=p.details?`<div class="d-section"><h4>📋 تفاصيل</h4><p class="d-details">${p.details}</p></div>`:'';
   const badgeCls=p.badge==='جديد'?'pb-new':p.badge==='خصم'?'pb-sale':'pb-best';
@@ -386,42 +394,42 @@ window.openDetail=(id)=>{
       <div class="d-section"><h4>📦 محتويات الباقة</h4><div class="d-tags">${tags||`<span class="d-tag">${p.desc}</span>`}</div></div>
       ${detailsSec}
       <div class="d-actions">
-        <button class="d-add" onclick="doAdd('${p.name.replace(/'/g,"\\'")}',${p.price},'${p.emoji}','${p.imageUrl||''}',${p.id});closeDetail()">🛒 أضيفي للسلة</button>
-        <button class="d-wa" onclick="waMsg('مرحباً! مهتمة بـ *${p.name}* بسعر ${p.price} ج.م 🌸\nممكن أعرف أكثر؟')">💬 استفسري</button>
+        <button class="d-add" id="dAddBtn">🛒 أضيفي للسلة</button>
+        <button class="d-wa"  id="dWaBtn">💬 استفسري</button>
       </div>
     </div>`;
+  document.getElementById('dAddBtn').onclick=()=>{doAdd(p.name,p.price,p.emoji,p.imageUrl||'',p.id);closeDetail();};
+  document.getElementById('dWaBtn').onclick=()=>{window.open(`https://wa.me/${WA}?text=${encodeURIComponent('مرحباً! أنا مهتمة بـ *'+p.name+'* بسعر '+p.price+' ج.م 🌸\nممكن أعرف أكثر؟')}`,'_blank');};
   document.getElementById('detailModal').classList.add('open');
   document.body.style.overflow='hidden';
 };
-window.closeDetail=()=>{ document.getElementById('detailModal').classList.remove('open'); document.body.style.overflow=''; };
-document.getElementById('detailModal').addEventListener('click',e=>{ if(e.target===e.currentTarget) window.closeDetail(); });
+window.closeDetail=()=>{document.getElementById('detailModal').classList.remove('open');document.body.style.overflow='';_dp=null;};
+document.getElementById('detailModal').addEventListener('click',e=>{if(e.target===e.currentTarget)window.closeDetail();});
 
 /* ── Cart ── */
 window.doAdd=(name,price,emoji,imageUrl,id)=>{
   const ex=cart.find(i=>i.name===name);
-  if(ex) ex.qty++; else cart.push({name,price,emoji,imageUrl,qty:1});
-  updateCart(); showToast('تمت الإضافة للسلة ✅');
+  if(ex)ex.qty++;else cart.push({name,price,emoji,imageUrl,qty:1});
+  updateCart();showToast('تمت الإضافة للسلة ✅');
   if(id){const b=document.getElementById(`ab${id}`);if(b){b.classList.add('added');b.textContent='✓ تمت';setTimeout(()=>{b.classList.remove('added');b.textContent='+ أضيفي';},2000);}}
 };
-window.changeQty=(i,d)=>{ cart[i].qty+=d; if(cart[i].qty<=0)cart.splice(i,1); updateCart(); };
+window.changeQty=(i,d)=>{cart[i].qty+=d;if(cart[i].qty<=0)cart.splice(i,1);updateCart();};
 function updateCart(){
   const cnt=cart.reduce((s,i)=>s+i.qty,0);
   const tot=cart.reduce((s,i)=>s+i.price*i.qty,0);
   document.getElementById('cartCount').textContent=cnt;
   document.getElementById('cartTotal').textContent=tot.toLocaleString('ar-EG')+' ج.م';
-  const el=document.getElementById('cartItems'), ft=document.getElementById('cartFt');
-  if(!cart.length){ el.innerHTML='<div class="empty-cart"><span class="ec-ic">🛒</span><p>سلتك فارغة</p></div>'; ft.style.display='none'; }
+  const el=document.getElementById('cartItems'),ft=document.getElementById('cartFt');
+  if(!cart.length){el.innerHTML='<div class="empty-cart"><span class="ec-ic">🛒</span><p>سلتك فارغة</p></div>';ft.style.display='none';}
   else{
     ft.style.display='block';
     el.innerHTML=cart.map((it,i)=>{
-      const thumb=it.imageUrl&&it.imageUrl.length>4
-        ?`<img src="${it.imageUrl}" class="ci-thumb" onerror="this.outerHTML='<span class=ci-emoji>'+encodeURIComponent(it.emoji)+'</span>'">`
-        :`<span class="ci-emoji">${it.emoji}</span>`;
+      const thumb=it.imageUrl&&it.imageUrl.length>4?`<img src="${it.imageUrl}" class="ci-thumb" onerror="this.style.display='none'">`:`<span class="ci-emoji">${it.emoji}</span>`;
       return `<div class="ci">${thumb}<div class="ci-info"><h4>${it.name}</h4><p>${(it.price*it.qty).toLocaleString('ar-EG')} ج.م</p></div><div class="ci-ctrl"><button class="q-btn" onclick="changeQty(${i},-1)">−</button><span>${it.qty}</span><button class="q-btn" onclick="changeQty(${i},1)">+</button></div></div>`;
     }).join('');
   }
 }
-window.toggleCart=()=>{ document.getElementById('cartPanel').classList.toggle('open'); document.getElementById('overlay').classList.toggle('open'); };
+window.toggleCart=()=>{document.getElementById('cartPanel').classList.toggle('open');document.getElementById('overlay').classList.toggle('open');};
 
 /* ── Place Order ── */
 window.placeOrder=async()=>{
@@ -435,57 +443,142 @@ window.placeOrder=async()=>{
   const order={name,phone,address,notes,items:[...cart],total,date:new Date().toLocaleString('ar-EG'),status:'new'};
   const r=push(ref(db,'orders'));
   const orderId='ORD-'+r.key.slice(-5).toUpperCase();
-  order.id=orderId; await set(r,order);
+  order.id=orderId;await set(r,order);
   const lines=cart.map(i=>`• ${i.emoji} ${i.name} × ${i.qty} = ${(i.price*i.qty).toLocaleString('ar-EG')} ج.م`).join('\n');
   const msg=`🛍️ *طلب جديد - Cosmo Brand*\n\nرقم الطلب: *${orderId}*\n👤 ${name}\n📱 ${phone}\n📍 ${address}${notes?'\n📝 '+notes:''}\n\n📦 *المنتجات:*\n${lines}\n\n💰 *الإجمالي: ${total.toLocaleString('ar-EG')} ج.م*`;
   window.open(`https://wa.me/${WA}?text=${encodeURIComponent(msg)}`,'_blank');
   showToast(`🎉 تم إرسال طلبك! رقمه: ${orderId}`);
-  setTimeout(()=>{ cart=[];updateCart();window.toggleCart();['cName','cPhone','cAddress','cNotes'].forEach(id=>document.getElementById(id).value=''); },1800);
+  setTimeout(()=>{cart=[];updateCart();window.toggleCart();['cName','cPhone','cAddress','cNotes'].forEach(id=>document.getElementById(id).value='');},1800);
 };
 
 /* ── Track ── */
 window.openTrack=()=>document.getElementById('trackModal').classList.add('open');
-window.closeTrack=()=>{ document.getElementById('trackModal').classList.remove('open'); document.getElementById('trackRes').style.display='none'; document.getElementById('trackInp').value=''; };
+window.closeTrack=()=>{document.getElementById('trackModal').classList.remove('open');document.getElementById('trackRes').style.display='none';document.getElementById('trackInp').value='';};
 window.doTrack=async()=>{
   const id=document.getElementById('trackInp').value.trim().toUpperCase();
   const res=document.getElementById('trackRes');
-  res.style.display='block'; res.className='track-res'; res.textContent='🔍 جاري البحث…';
+  res.style.display='block';res.className='track-res';res.textContent='🔍 جاري البحث…';
   const snap=await get(ref(db,'orders'));
   const o=snap.val()?Object.values(snap.val()).find(x=>x.id===id):null;
   if(o){
     const st={new:'🆕 تم استلام طلبك وجاري المراجعة',confirmed:'✅ تم تأكيد طلبك',shipped:'🚚 طلبك في الطريق إليك!',delivered:'🎉 تم توصيل طلبك!',cancelled:'❌ تم إلغاء الطلب'}[o.status]||'📦 جاري المتابعة';
-    res.className='track-res found'; res.innerHTML=`<strong>${st}</strong><br>📅 ${o.date}<br>💰 ${o.total?.toLocaleString('ar-EG')} ج.م`;
-  } else { res.className='track-res notfound'; res.innerHTML='❌ رقم الطلب مش موجود — تأكد من الرقم'; }
+    res.className='track-res found';res.innerHTML=`<strong>${st}</strong><br>📅 ${o.date}<br>💰 ${o.total?.toLocaleString('ar-EG')} ج.م`;
+  }else{res.className='track-res notfound';res.innerHTML='❌ رقم الطلب مش موجود — تأكد من الرقم';}
 };
 
+/* ════════════════════════════════
+   AI BEAUTY ASSISTANT
+════════════════════════════════ */
+window.openAI=()=>{
+  document.getElementById('aiModal').classList.add('open');
+  document.body.style.overflow='hidden';
+  if(aiHistory.length===0){
+    addBotMsg('أهلاً! 🌸 أنا مستشارة الجمال الذكية من Cosmo Brand.\n\nاحكيلي عن مشكلتك أو ما تحتاجيه، وهرشحلك الباقة المناسبة من باقاتنا. 💕');
+  }
+};
+window.closeAI=()=>{document.getElementById('aiModal').classList.remove('open');document.body.style.overflow='';};
+document.getElementById('aiModal').addEventListener('click',e=>{if(e.target===e.currentTarget)window.closeAI();});
+
+window.sendAI=async()=>{
+  const inp=document.getElementById('aiInp');
+  const msg=inp.value.trim();
+  if(!msg)return;
+  inp.value='';
+  addUserMsg(msg);
+  aiHistory.push({role:'user',content:msg});
+  showTyping();
+  try{
+    // Build system prompt with current products
+    const prodsInfo=allProducts.length>0
+      ? allProducts.map(p=>`- ${p.name} (${p.category}) | ${p.price} ج.م | ${p.desc} | ${p.details||''}`).join('\n')
+      : 'لا توجد باقات متاحة حالياً.';
+    const systemPrompt=`أنت مستشارة جمال ذكية لمتجر Cosmo Brand المصري للعناية بالبشرة والشعر.
+مهمتك: تسمعي مشكلة العميلة وترشحيلها الباقة المناسبة من قائمة الباقات المتاحة.
+ردودك باللهجة المصرية الودودة، قصيرة ومفيدة.
+لما ترشحي باقة، اكتبي اسمها بالضبط كما هو في القائمة مسبوقاً بـ [RECOMMEND].
+مثال: [RECOMMEND]باقة التفتيح الذهبية
+
+الباقات المتاحة دلوقتي:
+${prodsInfo}
+
+لو مفيش باقة مناسبة، قولي للعميلة تتواصل معنا على الواتساب.`;
+
+    const resp=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:600,
+        system:systemPrompt,
+        messages:aiHistory
+      })
+    });
+    const data=await resp.json();
+    const reply=data.content?.[0]?.text||'معلش، حصل خطأ. جربي تاني 🙏';
+    hideTyping();
+    aiHistory.push({role:'assistant',content:reply});
+
+    // Parse recommendations
+    const parts=reply.split('[RECOMMEND]');
+    let displayReply=parts[0].trim();
+    const recommended=parts.slice(1).map(s=>s.split('\n')[0].trim()).filter(Boolean);
+
+    addBotMsg(displayReply, recommended);
+  }catch(e){
+    hideTyping();
+    addBotMsg('معلش، مش قادرة أتواصل دلوقتي 😔\nبس تقدري تتواصلي معنا على الواتساب وهنساعدك! 💕');
+  }
+};
+
+document.getElementById('aiInp').addEventListener('keydown',e=>{if(e.key==='Enter')window.sendAI();});
+
+function addBotMsg(text, recommendations=[]){
+  const msgs=document.getElementById('aiMsgs');
+  const div=document.createElement('div');
+  div.className='ai-msg bot';
+  div.innerHTML=text.replace(/\n/g,'<br>');
+  if(recommendations.length>0){
+    recommendations.forEach(name=>{
+      const p=allProducts.find(x=>x.name===name);
+      if(p){
+        const card=document.createElement('div');
+        card.className='ai-prod-card';
+        card.innerHTML=`<h5>${p.emoji} ${p.name}</h5><p>${p.desc}</p><div class="apc-foot"><span class="apc-price">${p.price} ج.م</span><button class="apc-add" onclick="doAdd('${p.name.replace(/'/g,"\\'")}',${p.price},'${p.emoji}','${p.imageUrl||''}',${p.id});showToast('تمت الإضافة للسلة ✅')">+ أضيفي للسلة</button></div>`;
+        card.onclick=(e)=>{ if(e.target.classList.contains('apc-add'))return; openDetail(p.id); closeAI(); };
+        div.appendChild(card);
+      }
+    });
+  }
+  msgs.appendChild(div);
+  msgs.scrollTop=msgs.scrollHeight;
+}
+function addUserMsg(text){
+  const msgs=document.getElementById('aiMsgs');
+  const div=document.createElement('div');
+  div.className='ai-msg user';
+  div.textContent=text;
+  msgs.appendChild(div);
+  msgs.scrollTop=msgs.scrollHeight;
+}
+let typingEl=null;
+function showTyping(){
+  typingEl=document.createElement('div');
+  typingEl.className='ai-typing';
+  typingEl.innerHTML='<span></span><span></span><span></span>';
+  document.getElementById('aiMsgs').appendChild(typingEl);
+  document.getElementById('aiMsgs').scrollTop=99999;
+}
+function hideTyping(){if(typingEl){typingEl.remove();typingEl=null;}}
+
 /* ── Misc ── */
-function waContact(){ window.open(`https://wa.me/${WA}?text=${encodeURIComponent('مرحباً! أريد الاستفسار عن Cosmo Brand 🌸')}`,'_blank'); }
+function waContact(){window.open(`https://wa.me/${WA}?text=${encodeURIComponent('مرحباً! أريد الاستفسار عن Cosmo Brand 🌸')}`,'_blank');}
 window.waContact=waContact;
-window.waMsg=(m)=>window.open(`https://wa.me/${WA}?text=${encodeURIComponent(m)}`,'_blank');
 function showToast(msg,ic='✅'){const t=document.getElementById('toast');document.getElementById('tmsg').textContent=msg;document.getElementById('tic').textContent=ic;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3200);}
 
-function defaults(){return[
-  {id:1,name:'باقة علاج حب الشباب الأساسية',price:199,oldPrice:280,emoji:'🫧',category:'acne',badge:'الأفضل',desc:'غسول + تونر + كريم مضاد للبكتيريا',details:'روتين متكامل للتخلص من حب الشباب خلال 4 أسابيع. مناسب للبشرة الحساسة.',reviews:512,imageUrl:''},
-  {id:2,name:'باقة حب الشباب المكثفة',price:349,oldPrice:450,emoji:'💊',category:'acne',badge:'خصم',desc:'سيروم سالسيليك + قناع + كريم ليلي',details:'للحالات المتوسطة. نتائج من الأسبوع الأول.',reviews:278,imageUrl:''},
-  {id:3,name:'باقة حب الشباب الشاملة',price:499,emoji:'🧪',category:'acne',badge:'جديد',desc:'7 منتجات لروتين صباحي ومسائي',details:'الحل الأشمل لعلاج حب الشباب — 3 أشهر.',reviews:134,imageUrl:''},
-  {id:4,name:'باقة التفتيح الذهبية',price:279,oldPrice:360,emoji:'☀️',category:'brightening',badge:'خصم',desc:'سيروم فيتامين C + كريم تفتيح + واقي شمس',details:'تفتيح طبيعي وآمن خلال 6 أسابيع.',reviews:423,imageUrl:''},
-  {id:5,name:'باقة البشرة المضيئة',price:389,emoji:'✨',category:'brightening',badge:'الأفضل',desc:'نياسيناميد + كريم ليلي + سيروم التفتيح',details:'تضيء البشرة وتوحد لونها مع تقليل البقع الداكنة.',reviews:317,imageUrl:''},
-  {id:6,name:'باقة التفتيح الفاخرة',price:549,emoji:'💛',category:'brightening',badge:'جديد',desc:'5 منتجات فاخرة لبشرة مشرقة',details:'مكونات فاخرة من أرقى الماركات.',reviews:98,imageUrl:''},
-  {id:7,name:'باقة الترطيب العميق',price:229,oldPrice:299,emoji:'💧',category:'moisturizing',badge:'خصم',desc:'هيالورونيك + كريم ترطيب + مصل مكثف',details:'ترطيب يدوم 24 ساعة للبشرة الجافة.',reviews:634,imageUrl:''},
-  {id:8,name:'باقة البشرة الجافة',price:319,emoji:'🌊',category:'moisturizing',badge:'الأفضل',desc:'كريم غني + زيت وجه + قناع أسبوعي',details:'تغذية عميقة للبشرة الجافة والمتقشرة.',reviews:445,imageUrl:''},
-  {id:9,name:'باقة الترطيب الخفيف',price:189,emoji:'🧴',category:'moisturizing',badge:'',desc:'مناسبة للبشرة الدهنية والمختلطة',details:'ترطيب خفيف بدون دهون.',reviews:289,imageUrl:''},
-  {id:10,name:'باقة إيقاف التساقط',price:259,oldPrice:340,emoji:'🌱',category:'hairloss',badge:'خصم',desc:'شامبو كثافة + سيروم جذور + مكملات',details:'تقوية الجذور وتقليل التساقط من الأسبوع الثاني.',reviews:387,imageUrl:''},
-  {id:11,name:'باقة تكثيف الشعر',price:369,emoji:'💪',category:'hairloss',badge:'الأفضل',desc:'علاج ميزوثيرابي منزلي + بخاخ كثافة',details:'لتكثيف الشعر الخفيف وإعادة الكثافة الطبيعية.',reviews:512,imageUrl:''},
-  {id:12,name:'باقة التساقط الشاملة',price:489,emoji:'👑',category:'hairloss',badge:'جديد',desc:'6 منتجات لبرنامج 3 أشهر',details:'برنامج علاجي للتساقط الشديد.',reviews:156,imageUrl:''},
-  {id:13,name:'باقة علاج القشرة السريع',price:179,oldPrice:229,emoji:'❄️',category:'dandruff',badge:'خصم',desc:'شامبو زنك + بلسم مضاد للفطريات',details:'يتخلص من القشرة من أول استخدام.',reviews:298,imageUrl:''},
-  {id:14,name:'باقة فروة الرأس الصحية',price:279,emoji:'🌿',category:'dandruff',badge:'الأفضل',desc:'سيروم فروة رأس + شامبو طبي + قناع',details:'علاج شامل للقشرة وتهيج فروة الرأس.',reviews:341,imageUrl:''},
-  {id:15,name:'باقة القشرة المتقدمة',price:399,emoji:'🔬',category:'dandruff',badge:'',desc:'مناسبة للحالات المزمنة',details:'للحالات التي لم تستجب للعلاجات العادية.',reviews:112,imageUrl:''},
-  {id:16,name:'باقة الشعر الحريري',price:219,oldPrice:289,emoji:'💆‍♀️',category:'haircare',badge:'خصم',desc:'ماسك + بلسم ترطيب عميق + زيت أرغان',details:'لشعر ناعم ومرطب ولامع.',reviews:476,imageUrl:''},
-  {id:17,name:'باقة الشعر التالف',price:309,emoji:'🌺',category:'haircare',badge:'الأفضل',desc:'علاج كيراتين منزلي + سيروم إصلاح',details:'لإصلاح الشعر المتضرر من الصبغة والحرارة.',reviews:523,imageUrl:''},
-  {id:18,name:'باقة ترطيب الشعر الفاخرة',price:449,emoji:'✨',category:'haircare',badge:'جديد',desc:'5 منتجات لشعر ناعم ولامع',details:'باقة فاخرة لترطيب عميق ومستمر.',reviews:189,imageUrl:''},
-  {id:19,name:'أحمر شفاه مخملي دائم',price:89,emoji:'💄',category:'makeup',badge:'جديد',desc:'يدوم 16 ساعة + 20 درجة لون',details:'ثبات استثنائي وألوان غنية لكل مناسبة.',reviews:567,imageUrl:''},
-  {id:20,name:'عطر ورد الليل الرومانسي',price:450,emoji:'🌹',category:'perfume',badge:'',desc:'50 مل - عطر شرقي فاخر',details:'عطر دافئ وفاخر يدوم طوال اليوم.',reviews:89,imageUrl:''},
-];}
+function defaults(){
+  // لا توجد باقات افتراضية — أضف باقاتك من لوحة التحكم
+  return [];
+}
 </script>
 </body>
 </html>

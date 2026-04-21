@@ -156,8 +156,14 @@ body{font-family:'Tajawal',sans-serif;background:#ede4e8;color:#2d1525;}
 .toast.show{transform:translateY(0);opacity:1;}
 
 @media(max-width:900px){
-  .sidebar{transform:translateX(100%);transition:transform .3s;}.sidebar.open{transform:translateX(0);}
-  .main{margin-right:0;}.stats{grid-template-columns:1fr 1fr;}.frow,.frow3{grid-template-columns:1fr;}
+  .sidebar{transform:translateX(100%);transition:transform .3s;box-shadow:-4px 0 24px rgba(0,0,0,.35);}
+  .sidebar.open{transform:translateX(0);}
+  .main{margin-right:0;}
+  .stats{grid-template-columns:1fr 1fr;}
+  .frow,.frow3{grid-template-columns:1fr;}
+  #menuBtn{display:flex !important;}
+  .pgrid{grid-template-columns:1fr 1fr;}
+  .topbar h2{font-size:1rem;}
 }
 </style>
 </head>
@@ -200,10 +206,16 @@ body{font-family:'Tajawal',sans-serif;background:#ede4e8;color:#2d1525;}
   </div>
 </aside>
 
+<!-- MOBILE OVERLAY -->
+<div id="mobOverlay" onclick="closeSidebar()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:99;"></div>
+
 <!-- MAIN -->
 <div class="main">
   <div class="topbar">
-    <h2 id="ptitle">📊 الرئيسية</h2>
+    <div style="display:flex;align-items:center;gap:12px">
+      <button id="menuBtn" onclick="toggleSidebar()" style="display:none;background:var(--soft);border:none;width:38px;height:38px;border-radius:9px;font-size:1.2rem;cursor:pointer;align-items:center;justify-content:center;color:var(--deep)">☰</button>
+      <h2 id="ptitle">📊 الرئيسية</h2>
+    </div>
     <div class="tb-r">
       <span class="tb-date" id="dLbl">—</span>
       <button class="out-btn" onclick="doLogout()">↩️ خروج</button>
@@ -624,6 +636,19 @@ window.prvImg=(iId,pId)=>{
   else img.style.display='none';
 };
 
+/* ── Mobile Sidebar ── */
+window.toggleSidebar=()=>{
+  const sb=document.getElementById('sidebar');
+  const ov=document.getElementById('mobOverlay');
+  const isOpen=sb.classList.contains('open');
+  if(isOpen){sb.classList.remove('open');ov.style.display='none';}
+  else{sb.classList.add('open');ov.style.display='block';}
+};
+window.closeSidebar=()=>{
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('mobOverlay').style.display='none';
+};
+
 /* ── Nav ── */
 const pages={dashboard:'📊 الرئيسية',orders:'📋 الطلبات',products:'📦 المنتجات',settings:'⚙️ الإعدادات'};
 window.goTo=(name,el)=>{
@@ -634,6 +659,8 @@ window.goTo=(name,el)=>{
   document.getElementById('ptitle').textContent=pages[name]||name;
   if(name==='orders') renderOrders();
   if(name==='products') renderProds();
+  // close sidebar on mobile after click
+  window.closeSidebar();
 };
 
 /* ── Toast ── */
