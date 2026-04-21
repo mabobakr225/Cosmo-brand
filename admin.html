@@ -2,73 +2,92 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cosmo Brand | لوحة التحكم</title>
+    <title>لوحة إدارة Cosmo | الاحترافية</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root { --deep:#8b3a5a; --gold:#c9a84c; --soft:#f5e6ea; }
-        body { font-family: 'Tajawal', sans-serif; background: #fdf6f0; margin: 0; padding: 0; }
-        
-        /* الهيدر */
-        nav { background: var(--deep); color: white; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; }
-        .nav-btn { background: white; color: var(--deep); padding: 8px 15px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 0.9rem; }
-
-        .container { padding: 30px 5%; max-width: 900px; margin: 0 auto; }
-        
-        /* تسجيل الدخول */
-        #loginSection { background: white; padding: 40px; border-radius: 20px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin-top: 50px; }
-        
-        /* نموذج الإضافة والتعديل */
-        .card { background: white; padding: 25px; border-radius: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); margin-bottom: 30px; }
-        input, textarea { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 10px; font-family: inherit; box-sizing: border-box; }
-        .submit-btn { width: 100%; padding: 15px; background: var(--deep); color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 1rem; }
-        .cancel-btn { width: 100%; padding: 10px; background: #eee; color: #666; border: none; border-radius: 10px; margin-top: 10px; cursor: pointer; display: none; }
-
-        /* قائمة المنتجات */
-        .product-item { background: white; padding: 15px; border-radius: 15px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border: 1px solid #eee; }
-        .item-info { display: flex; align-items: center; }
-        .item-img { width: 50px; height: 50px; border-radius: 8px; object-fit: cover; margin-left: 15px; background: #fafafa; }
-        .actions button { padding: 8px 12px; border-radius: 8px; border: none; cursor: pointer; font-weight: bold; margin-right: 5px; }
-        .edit-btn { background: #e3f2fd; color: #1976d2; }
-        .del-btn { background: #ffebee; color: #d32f2f; }
+        :root { --main: #8b3a5a; --bg: #fdf6f0; }
+        body { font-family: 'Tajawal', sans-serif; background: var(--bg); margin: 0; }
+        nav { background: var(--main); color: white; padding: 15px; display: flex; gap: 15px; overflow-x: auto; position: sticky; top: 0; z-index: 100; }
+        nav span { cursor: pointer; padding: 8px 15px; border-radius: 8px; white-space: nowrap; }
+        .active-tab { background: rgba(255,255,255,0.3); font-weight: bold; }
+        .container { padding: 20px; max-width: 1000px; margin: auto; }
+        .card { background: white; padding: 20px; border-radius: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); display: none; margin-bottom: 20px; }
+        .show { display: block; }
+        input, textarea, select { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 10px; box-sizing: border-box; }
+        button { background: var(--main); color: white; border: none; padding: 12px; border-radius: 10px; cursor: pointer; font-weight: bold; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 0.9rem; }
+        th, td { border: 1px solid #eee; padding: 10px; text-align: center; }
+        .p-item { border-bottom: 1px solid #eee; padding: 10px 0; display: flex; justify-content: space-between; }
     </style>
 </head>
 <body>
 
-<nav>
-    <div style="font-weight: bold; font-size: 1.2rem;">لوحة تحكم Cosmo Brand</div>
-    <a href="index.html" class="nav-btn">عرض المتجر 🌐</a>
+<nav id="adminNav" style="display:none;">
+    <span onclick="showTab('productsTab', this)" class="active-tab">📦 المنتجات</span>
+    <span onclick="showTab('ordersTab', this)">📝 الأوردرات</span>
+    <span onclick="showTab('galleryTab', this)">🖼️ المعرض</span>
+    <span onclick="showTab('settingsTab', this)">⚙️ الإعدادات</span>
 </nav>
 
 <div class="container">
-    <div id="loginSection">
+    <div id="loginCard" class="card show" style="text-align: center;">
         <h2>🔐 دخول الإدارة</h2>
-        <input id="adminPass" type="password" placeholder="أدخل كلمة المرور">
-        <button class="submit-btn" onclick="checkLogin()">دخول</button>
+        <input type="password" id="loginPass" placeholder="كلمة المرور">
+        <button onclick="login()">دخول</button>
     </div>
 
-    <div id="adminPanel" style="display:none;">
-        <div class="card">
-            <h3 id="formTitle">➕ إضافة باقة جديدة</h3>
-            <input id="pName" placeholder="اسم الباقة (مثلاً: باقة العناية الفائقة)">
-            <input id="pPrice" type="number" placeholder="السعر (ج.م)">
-            <input id="pImg" placeholder="رابط صورة المنتج (URL)">
-            <textarea id="pDetails" placeholder="تفاصيل الباقة (هذه التفاصيل هي ما يقرأه مساعد الـ AI ليرشح الباقة للعميل)" rows="4"></textarea>
-            
-            <button id="mainBtn" class="submit-btn" onclick="handleSubmission()">نشر الباقة الآن</button>
-            <button id="cancelBtn" class="cancel-btn" onclick="resetForm()">إلغاء التعديل</button>
+    <div id="productsTab" class="card">
+        <h3>➕ إضافة/تعديل باقة</h3>
+        <div class="grid-2">
+            <input id="pName" placeholder="اسم الباقة">
+            <input id="pPrice" type="number" placeholder="السعر">
         </div>
+        <div class="grid-2">
+            <input id="pImg" placeholder="رابط الصورة">
+            <input id="pPoints" type="number" placeholder="نقاط المكافأة (مثلاً: 50)">
+        </div>
+        <select id="pCat">
+            <option value="hair">عناية بالشعر (تساقط/قشرة)</option>
+            <option value="skin">عناية بالبشرة (جفاف/حبوب)</option>
+            <option value="all">باقة شاملة</option>
+        </select>
+        <textarea id="pContent" placeholder="محتويات الباقة (شامبو، زيت...)"></textarea>
+        <textarea id="pTip" placeholder="💡 نصيحة الخبير (تظهر للعميل كإرشاد طبي)"></textarea>
+        <textarea id="pDetails" placeholder="تفاصيل للـ AI (الكلمات المفتاحية للبحث)"></textarea>
+        <button onclick="saveProduct()">حفظ الباقة</button>
+        <div id="pList" style="margin-top:20px;"></div>
+    </div>
 
-        <div class="card">
-            <h3>📋 الباقات الحالية في المتجر</h3>
-            <div id="productsList">جاري التحميل...</div>
+    <div id="ordersTab" class="card">
+        <h3>📋 سجل الطلبات والنقاط</h3>
+        <table>
+            <thead><tr><th>العميل</th><th>المنتج</th><th>النقاط</th><th>الحالة</th></tr></thead>
+            <tbody id="ordersList"></tbody>
+        </table>
+    </div>
+
+    <div id="galleryTab" class="card">
+        <h3>🖼️ إضافة نتائج (قبل وبعد)</h3>
+        <input id="gTitle" placeholder="عنوان النتيجة (مثلاً: علاج تساقط خلال شهر)">
+        <div class="grid-2">
+            <input id="gBefore" placeholder="رابط صورة (قبل)">
+            <input id="gAfter" placeholder="رابط صورة (بعد)">
         </div>
+        <button onclick="saveGallery()">إضافة للمعرض</button>
+        <div id="gList"></div>
+    </div>
+
+    <div id="settingsTab" class="card">
+        <h3>⚙️ إعدادات المتجر</h3>
+        <input id="setWA" placeholder="رقم الواتساب (201xxx)">
+        <input id="setPass" placeholder="باسورد الإدارة الجديد">
+        <button onclick="saveSettings()">تحديث</button>
     </div>
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-
 <script>
     const firebaseConfig = {
         apiKey: "AIzaSyBDUzmVCOB9HK_g5iB4wm_UAjw0jAvhr8k",
@@ -80,106 +99,78 @@
     };
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
+    let config = { pass: "1234", wa: "201125696178" };
 
-    let editingId = null; // متغير لحفظ آيدي الباقة التي يتم تعديلها
+    db.collection("settings").doc("main").onSnapshot(d => { if(d.exists) config = d.data(); });
 
-    function checkLogin() {
-        const pass = document.getElementById('adminPass').value;
-        if(pass === "1234") { // يمكنك تغيير كلمة السر هنا
-            document.getElementById('loginSection').style.display = 'none';
-            document.getElementById('adminPanel').style.display = 'block';
-            loadProducts();
-        } else {
-            alert("كلمة المرور غير صحيحة!");
-        }
+    function login() {
+        if(document.getElementById('loginPass').value === config.pass) {
+            document.getElementById('loginCard').classList.remove('show');
+            document.getElementById('adminNav').style.display = 'flex';
+            showTab('productsTab', document.querySelector('nav span'));
+            loadData();
+        } else { alert("كلمة المرور خطأ"); }
     }
 
-    // دالة واحدة للتعامل مع الإضافة أو التعديل (إصلاح مشكلة زر التعديل)
-    async function handleSubmission() {
-        const name = document.getElementById('pName').value;
-        const price = Number(document.getElementById('pPrice').value);
-        const imageUrl = document.getElementById('pImg').value;
-        const details = document.getElementById('pDetails').value;
-
-        if(!name || !price) return alert("يرجى ملء الاسم والسعر على الأقل");
-
-        document.getElementById('mainBtn').innerText = "جاري الحفظ...";
-
-        try {
-            if (editingId) {
-                // وضع التعديل: تحديث الباقة الموجودة
-                await db.collection("products").doc(editingId).update({
-                    name, price, imageUrl, details
-                });
-                alert("✅ تم تحديث الباقة بنجاح!");
-            } else {
-                // وضع الإضافة: إضافة باقة جديدة
-                await db.collection("products").add({
-                    name, price, imageUrl, details, createdAt: new Date()
-                });
-                alert("✅ تم نشر الباقة الجديدة!");
-            }
-            resetForm();
-        } catch (e) {
-            alert("❌ حدث خطأ: " + e.message);
-        }
-        document.getElementById('mainBtn').innerText = editingId ? "تحديث الباقة الآن" : "نشر الباقة الآن";
+    function showTab(id, el) {
+        document.querySelectorAll('.card').forEach(c => c.classList.remove('show'));
+        document.querySelectorAll('nav span').forEach(s => s.classList.remove('active-tab'));
+        document.getElementById(id).classList.add('show');
+        el.classList.add('active-tab');
     }
 
-    function loadProducts() {
-        db.collection("products").orderBy("createdAt", "desc").onSnapshot(snap => {
-            let html = '';
-            snap.forEach(doc => {
-                const p = doc.data();
-                html += `
-                <div class="product-item">
-                    <div class="item-info">
-                        <img src="${p.imageUrl || 'https://via.placeholder.com/150'}" class="item-img">
-                        <div>
-                            <b>${p.name}</b><br>
-                            <small>${p.price} ج.م</small>
-                        </div>
-                    </div>
-                    <div class="actions">
-                        <button class="edit-btn" onclick="startEdit('${doc.id}', '${p.name}', ${p.price}, '${p.imageUrl}', \`${p.details || ''}\`)">تعديل</button>
-                        <button class="del-btn" onclick="deleteItem('${doc.id}')">حذف</button>
-                    </div>
-                </div>`;
+    async function saveProduct() {
+        const data = {
+            name: document.getElementById('pName').value,
+            price: document.getElementById('pPrice').value,
+            points: document.getElementById('pPoints').value,
+            imageUrl: document.getElementById('pImg').value,
+            category: document.getElementById('pCat').value,
+            content: document.getElementById('pContent').value,
+            expertTip: document.getElementById('pTip').value,
+            details: document.getElementById('pDetails').value,
+            createdAt: new Date()
+        };
+        await db.collection("products").add(data);
+        alert("تم الحفظ!");
+    }
+
+    async function saveGallery() {
+        await db.collection("gallery").add({
+            title: document.getElementById('gTitle').value,
+            before: document.getElementById('gBefore').value,
+            after: document.getElementById('gAfter').value
+        });
+        alert("تمت الإضافة للمعرض");
+    }
+
+    function loadData() {
+        // تحميل المنتجات للحذف والتعديل
+        db.collection("products").onSnapshot(snap => {
+            let h = '';
+            snap.forEach(d => {
+                h += `<div class="p-item"><span>${d.data().name}</span> <button onclick="db.collection('products').doc('${d.id}').delete()" style="background:red; padding:3px 8px;">حذف</button></div>`;
             });
-            document.getElementById('productsList').innerHTML = html || 'لا توجد باقات حالياً';
+            document.getElementById('pList').innerHTML = h;
+        });
+
+        // تحميل الأوردرات
+        db.collection("orders").orderBy("date","desc").onSnapshot(snap => {
+            let h = '';
+            snap.forEach(d => {
+                const o = d.data();
+                h += `<tr><td>${o.clientName}</td><td>${o.productName}</td><td>${o.pointsEarned || 0}</td><td>${o.status}</td></tr>`;
+            });
+            document.getElementById('ordersList').innerHTML = h;
         });
     }
 
-    // وظيفة بدء التعديل
-    function startEdit(id, name, price, img, details) {
-        editingId = id;
-        document.getElementById('pName').value = name;
-        document.getElementById('pPrice').value = price;
-        document.getElementById('pImg').value = img;
-        document.getElementById('pDetails').value = details;
-        
-        document.getElementById('formTitle').innerText = "✏️ تعديل الباقة الحالية";
-        document.getElementById('mainBtn').innerText = "تحديث الباقة الآن";
-        document.getElementById('cancelBtn').style.display = "block";
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    // إعادة ضبط النموذج بعد النجاح أو الإلغاء
-    function resetForm() {
-        editingId = null;
-        document.getElementById('pName').value = '';
-        document.getElementById('pPrice').value = '';
-        document.getElementById('pImg').value = '';
-        document.getElementById('pDetails').value = '';
-        document.getElementById('formTitle').innerText = "➕ إضافة باقة جديدة";
-        document.getElementById('mainBtn').innerText = "نشر الباقة الآن";
-        document.getElementById('cancelBtn').style.display = "none";
-    }
-
-    async function deleteItem(id) {
-        if(confirm("هل أنت متأكد من حذف هذه الباقة نهائياً؟")) {
-            await db.collection("products").doc(id).delete();
-        }
+    async function saveSettings() {
+        await db.collection("settings").doc("main").set({
+            wa: document.getElementById('setWA').value,
+            pass: document.getElementById('setPass').value
+        });
+        alert("تم التحديث");
     }
 </script>
 </body>
